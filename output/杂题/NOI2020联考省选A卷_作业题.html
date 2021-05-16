@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>NOI2020联考省选A卷_作业题</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="noi2020省选联考a卷-作业题">NOI2020省选联考A卷: 作业题</h1>
+<h2 id="statement">statement</h2>
+<p>给一个带有边权的无向图<span class="math inline">G=(V,E)</span>求模<span class="math inline">p=998244353</span>意义下.</p>
+<p><span class="math display">
+\sum_{T\in ST(G)}\ \gcd_{w\in T}(w)(\sum_{w\in T}w)
+</span></p>
+<p>其中<span class="math inline">ST(G)</span>表示<span class="math inline">G</span>的所有生成树. 即每个<span class="math inline">G</span>的生成树,贡献边权和乘边权的gcd.</p>
+<h2 id="solutionpartial-solved">solution(partial solved)</h2>
+<p>==这个做法并非出题人给出的正解,复杂度并非最优,只是在本题实际比赛评测数据上足够优秀可以AC==</p>
+<p>看到生成树计数问题肯定想<code>matrix-tree theorem</code>,它说,对于无向图<span class="math inline">G=(V,E)</span>定义. <span class="math display">
+A_{i,j}=\sum_{w(i,j)\in E}w\\
+D_{i,i}=\sum_{w(i,v)\in E}w\\
+C=D-A
+</span> 其中<span class="math inline">A</span>称为邻接矩阵(adjacent),<span class="math inline">D</span>称为度数矩阵(degree). 实际意义是,<span class="math inline">A_{u,v}</span>是<span class="math inline">(u,v)</span>重边的边权和,<span class="math inline">D_{u,u}</span>是其中一个顶点是<span class="math inline">u</span>的重边边权和. 有<span class="math inline">C</span>的任意<span class="math inline">|V|-1</span>阶主子式的值为<span class="math inline">\sum_{T\in ST(G)}(\prod_{w\in T}w)</span>即对所有生成树的边权乘积求和.</p>
+<p>这里题目由于有<span class="math inline">\sum w</span>,不能直接用矩阵树定理,如果要利用离散对数转成<span class="math inline">pow(g,\prod (\log w))</span>的话复杂度已经有<span class="math inline">O(|E|\sqrt p)</span>是不可接受的.所以我们换个方向,考虑每条边的贡献,比如这个边是<span class="math inline">w_0=(u,v)</span>.</p>
+<p>我们想要让生成树包含这条边,非常直觉地,我们利用<span class="math inline">G</span>构造一个新的图<span class="math inline">G&#39;</span>把<span class="math inline">(u,v)</span>合并为同一个顶点<span class="math inline">x</span>,一端是<span class="math inline">u</span>或者<span class="math inline">v</span>的边,就连到<span class="math inline">x</span>上去(当然要干掉<span class="math inline">(x,x)</span>这个自环,矩阵树定理不允许自环).这样<span class="math inline">ST(G&#39;)</span>就会与<span class="math inline">ST(G)</span>中包含了<span class="math inline">w_0</span>的生成树有一一对应. 于是<span class="math inline">w_0</span>的贡献可以这么写,利用<span class="math inline">\varphi * 1=id</span>即<span class="math inline">\sum_{d\mid n}\varphi(d)=n</span>展开gcd.(这里也可以用莫比乌斯反演,一样是可以最后划归到欧拉函数的). <span class="math display">
+w_0\sum_{T\in ST(G&#39;)}\gcd(w_0,\gcd(T))\\
+=w_0\sum_{T\in ST(G&#39;)}\sum_{d\mid \gcd(T)\\d\mid w_0}\varphi(d)\\
+=w_0\sum_{d\mid w_0}\varphi(d)\sum_{T\in ST(G&#39;)}[d\mid \gcd(T)]
+</span></p>
+<p>我们设<span class="math inline">f(d)=\sum_{T\in ST(G&#39;)}[d\mid \gcd(T)]</span>即<span class="math inline">G&#39;</span>中,边权<span class="math inline">\gcd</span>是<span class="math inline">d</span>的倍数的生成树数量,它非常好求,我们在<span class="math inline">G&#39;</span>中,保留边权为<span class="math inline">d</span>的倍数的边,得到<span class="math inline">G&#39;&#39;</span>那么<span class="math inline">G&#39;&#39;</span>的生成树数量即为<span class="math inline">f(d)</span>.</p>
+<p>这样的做法复杂度是<span class="math inline">O(\max_{w\in E}(w)+n^3m\max_{w\in E}\sigma_0(w))</span>其中<span class="math inline">n=|V|,m=|E|</span>. 然而实际上远远跑不满,首先对于<span class="math inline">G=(V,E)</span>如果<span class="math inline">|E|\lt |V|-1</span>那么显然没有生成树;此外,<span class="math inline">\max_{i\leq n}\sigma_0(i)</span>在OI数据范围内大约是<span class="math inline">n^\frac13</span>量级的,而且极少有数能到达的了.所以这个上界其实是非常松的,比赛现场不少选手写了这个非常符合直觉的做法,都成功地AC了这个题目,我猜出题人肯定没想到吧.</p>
+<h2 id="code">code</h2>
+<p>实现上有一些小技巧,也有一些容易写挂的地方…不贴代码贴个链接吧.</p>
+<p><a href="https://loj.ac/submission/847077">link:loj submission</a></p>
+<h2 id="本题的官方解答">本题的官方解答</h2>
+<p>BJOI2019的时候,有过一场训练赛,其中有一个题是这样的.<a href="https://www.luogu.com.cn/problem/P5296">link:luogu</a> 给定一个无向图<span class="math inline">G=(V,E)</span>,边带有权,求.模<span class="math inline">p=998244353</span>意义下,所有生成树的边权和的k次幂之和. <span class="math display">
+\sum_{T\in ST(G)}(\sum_{w\in T}w)^k
+</span> 做法很有趣,考虑展开<span class="math inline">(\sum w)^k</span> <span class="math display">
+\sum_{T\in ST(G)}(\sum_{w\in T}w)^k\\
+=\sum_{T}\ k!\sum_{0\leq f(w)\leq k\\ \sum f(w)=k}\prod_{w}\frac{w^{f(w)}}{f(w)!}\\
+=\sum_{T}\ k!\sum_{0\leq f(w)\leq k\\ \sum f(w)=k}[x^k]\prod_{w}\frac{(wx)^{f(w)}}{f(w)!}\\
+=\sum_{T}\ k![x^k]\prod_{w}\sum_{0\leq i}\frac{(wx)^i}{i!}\\
+=\sum_{T}\ k![x^k]\prod_{w}\exp(wx)\\
+=k![x^k]\sum_{T\in ST(G)}\prod_{w\in T}\exp(wx)
+</span> 这已经是一个可以使用矩阵树定理的式子了,我们在模<span class="math inline">x^{k+1}</span>意义下进行多项式运算即可.</p>
+<p>回到本题. <span class="math display">
+\sum_{T\in ST(G)}(\sum_{w\in T}w)\gcd_{w\in T}(w)\\
+=\sum_{T\in ST(G)}(\sum_{w\in T}w)\sum_{0\lt d\leq \max w\\ \forall w,d\mid w}\varphi(d)\\
+=\sum_{0\lt d\leq \max w}\varphi(d)\sum_{T\in ST(G)}[\forall w\in T,d\mid w]\sum_{w\in T} w\\
+f(d)=\sum_{T\in ST(G)}[\forall w\in T,d\mid w]\sum_{w\in T} w
+</span> 对于<span class="math inline">f(d)</span>考虑在<span class="math inline">G=(V,E)</span>的<span class="math inline">E</span>中,删去不满足<span class="math inline">d\mid w</span>的边,得到一个新的图<span class="math inline">G&#39;</span>,此时<span class="math inline">f(d)</span>即为<span class="math inline">\sum_{T\in ST(G&#39;)}(\sum_{w\in T}w)^{1}</span>即上面BJOI2019训练赛题目中<span class="math inline">k=1</span>的情况,套用那个解答即可.</p>
+<p>此外,如果<span class="math inline">\sum_{w\in E}[d\mid w]\lt |V|-1</span>那么<span class="math inline">G&#39;</span>没有生成树,这个<span class="math inline">f(d)</span>就是<span class="math inline">0</span>.于是我们最多需要计算<span class="math inline">\sum_{w\in E}\sigma_0(d)</span>个<span class="math inline">f</span>的取值(最坏情况即边的权值两两互质). 于是得到复杂度为<span class="math inline">O(n^3 \sum_{w\in E}\sigma_0(d))</span>的做法,这也是出题人给出的官方解答.</p>
+</body>
+</html>

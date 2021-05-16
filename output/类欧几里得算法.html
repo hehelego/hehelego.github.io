@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>类欧几里得算法</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="problem-statement">problem statement</h1>
+<p>给定正整数<span class="math inline">a,b,c,n</span>, 计算<span class="math inline">\displaystyle f(a,b,c,n)=\sum_{x=0}^n { \left\lfloor \frac{ax+b}{c} \right\rfloor }</span><br />
+即第一象限内在<span class="math inline">y=ax+b</span>下方的整点计数.</p>
+<h1 id="类欧几里得算法">“类欧几里得算法”</h1>
+<h2 class="unnumbered" id="case-1-ageq-c-texttt-or-bgeq-c">case 1: <span class="math inline">a\geq c \texttt{ or } b\geq c</span></h2>
+<p><span class="math display">\begin{aligned}
+        f(a,b,c,n)
+            &amp;=\sum_{x=0}^n { \left\lfloor \frac{ax+b}{c} \right\rfloor }\\
+            &amp;=\sum_{x=0}^n
+                { \left\lfloor 
+                    { \left\lfloor \frac{a}{c} \right\rfloor } x + { \left\lfloor \frac{b}{c} \right\rfloor }+
+                    \frac{(a\bmod c)c+(b\bmod c)}{c}
+                 \right\rfloor }\\
+            &amp;={ \left\lfloor \frac{a}{c} \right\rfloor }\frac{n(n+1)}{2} + { \left\lfloor \frac{b}{c} \right\rfloor }(n+1) +
+                \sum_{x=0}^n { \left\lfloor \frac{(a\bmod c)c+(b\bmod c)}{c} \right\rfloor }\\
+            &amp;={ \left\lfloor \frac{a}{c} \right\rfloor }\frac{n(n+1)}{2} + { \left\lfloor \frac{b}{c} \right\rfloor }(n+1)
+                + f(a\bmod c,b\bmod c,c,n)\\
+    \end{aligned}</span></p>
+<h2 class="unnumbered" id="cans-2-ab-c">cans 2: <span class="math inline">a,b &lt; c</span></h2>
+<p><span class="math display">\begin{aligned}
+        f(a,b,c,n)
+            &amp;=\sum_{x=0}^n { \left\lfloor \frac{ax+b}{c} \right\rfloor }
+             =\sum_{x=0}^n \sum_{i=1}^{ \left\lfloor \frac{an+b}{c} \right\rfloor }
+                \left[ i \leq { \left\lfloor \frac{ax+b}{c} \right\rfloor } \right]
+             =\sum_{x=0}^n \sum_{i=1}^{\left\lfloor\frac{an+b}{c}\right\rfloor}
+                \left[ i \leq \frac{ax+b}{c} \right]\\
+            &amp;=\sum_{i=1}^{ \left\lfloor \frac{an+b}{c} \right\rfloor }
+                    \sum_{x=0}^n \left[ x\geq \frac{ic-b}{a} \right]
+            =\sum_{i=1}^{ \left\lfloor \frac{an+b}{c} \right\rfloor }
+                    (n+1)-\sum_{x=0}^n \left[ x &lt; \frac{ic-b}{a}\right]\\
+    (*) &amp;=\sum_{i=1}^{ \left\lfloor \frac{an+b}{c} \right\rfloor }
+                    (n+1)-\sum_{x=0}^n \left[ x \leq \frac{ic-b-1}{a}\right]\\
+            &amp;=\sum_{i=1}^{ \left\lfloor \frac{an+b}{c} \right\rfloor }
+                    (n+1)-\sum_{x=0}^n \left[ x \leq { \left\lfloor \frac{ic-b-1}{a} \right\rfloor }\right]\\
+            &amp;={ \left\lfloor \frac{an+b}{c} \right\rfloor }(n+1)
+                -\sum_{i=0}^{{ \left\lfloor \frac{an+b}{c} \right\rfloor } -1}
+                \sum_{x=0}^n \left[ x \leq { \left\lfloor \frac{ic+c-b-1}{a} \right\rfloor }\right]\\
+            &amp;={ \left\lfloor \frac{an+b}{c} \right\rfloor } n
+                -\sum_{i=0}^{{ \left\lfloor \frac{an+b}{c} \right\rfloor }- 1}
+                \sum_{x=1}^n \left[ x \leq { \left\lfloor \frac{ic+c-b-1}{a} \right\rfloor }\right]\\
+            &amp;={ \left\lfloor \frac{an+b}{c} \right\rfloor }n-f\left(c,c-b-1,a,{ \left\lfloor \frac{an+b}{c} \right\rfloor } -1\right)
+    \end{aligned}</span></p>
+<p>其中<span class="math inline">(\ast)</span>,的处理比较特殊,主要的困难在<span class="math inline">a\mid ic-b</span>时如何避免算入<span class="math inline">\frac{ic-b}{a}</span>.<br />
+设<span class="math inline">r=ic-b\bmod a</span>,如果<span class="math inline">r=0</span>,这个减1会帮助我们卡掉<span class="math inline">x=\frac{ic-b}{a}</span>这个不该有贡献的值, 而<span class="math inline">r&gt;0</span>时,则没有影响.<br />
+也可以这样考虑: <span class="math inline">ax &lt; ic-b\iff ax \leq ic-b-1</span>.</p>
+<h1 id="complexity">complexity</h1>
+<p>设<span class="math inline">a,b,c=O(n)</span>,分析上述算法的时间复杂度.</p>
+<h2 class="unnumbered" id="lemma-0">Lemma 0</h2>
+<p><span class="math display">a\geq b \implies (a\bmod b) \leq \frac{a}{2}</span></p>
+<p><span class="math display">\begin{array}{c|l}
+    b\leq a\leq 2b &amp; a\bmod b=a-b\quad a\leq 2b\implies \frac{a}{2}\leq b\implies \frac{a}{2}\geq a-b\\
+    a &gt; 2b &amp; a\bmod b &lt; b \leq \frac{a}{2}
+\end{array}</span></p>
+<p>观察<span class="math inline">f(a,b,c,n)</span>的<span class="math inline">a,c</span>两个参数.<br />
+如果<span class="math inline">a\geq c</span>,那么递归求解一个<span class="math inline">a&#39;=a\bmod c,c&#39;=c</span>的和; 有<span class="math inline">a&#39; &lt; c&#39;</span> .<br />
+如果<span class="math inline">a&lt;    c</span>,那么递归求解一个<span class="math inline">a&#39;=c,c&#39;=a</span>的和; 有<span class="math inline">a&#39; \geq c&#39;</span> .</p>
+<p>所以,每进行两次递归求解,参数<span class="math inline">a</span>减半. 故<span class="math inline">O(\log n)</span>时间化规到<span class="math inline">a=0</span>的退化形式,这时可以<span class="math inline">O(1)</span>求解.</p>
+<p>于是,算法的时间复杂度是<span class="math inline">O(\log n)</span>.</p>
+<h1 id="generalized-algorithm">generalized algorithm</h1>
+<p>给定<span class="math inline">a,b,c,n,p,q</span>求解<span class="math inline">\displaystyle \sum_{x=0}^n
+{{ \left\lfloor \frac{ax+b}{c} \right\rfloor }}^{p}
+x^q</span>.<br />
+其中<span class="math inline">p,q</span>是与<span class="math inline">n</span>无关的小常数<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<h2 class="unnumbered" id="case-1-ageq-ctexttt-or-bgeq-c">case 1: <span class="math inline">a\geq c\texttt{ or }b\geq c</span></h2>
+<p><span class="math display">\begin{aligned}
+        S
+        &amp;=\sum_{x=0}^n { \left\lfloor { \left\lfloor \frac{a}{c} \right\rfloor } x+{ \left\lfloor \frac{b}{c} \right\rfloor }+\frac{(a\bmod c)x+(b\bmod c)}{c} \right\rfloor }^p x^q\\
+        &amp;=\sum_{x=0}^n
+            {\left(
+                { \left\lfloor \frac{a}{c} \right\rfloor }x + { \left\lfloor \frac{b}{c} \right\rfloor } + { \left\lfloor \frac{(a\bmod c)x+(b\bmod c)}{c} \right\rfloor }
+            \right)}^p x^q\\
+        &amp;=\sum_{x=0}^n
+                \sum_{\begin{subarray}{c}0\leq k_1,k_2,k_3\leq p\\ k_1+k_2+k_3=p\end{subarray}}
+                    \frac{p!}{k_1!k_2!k_3!}
+                    { \left\lfloor \frac{a}{c} \right\rfloor }^{k_1}
+                    { \left\lfloor \frac{b}{c} \right\rfloor }^{k_2}
+                    { \left\lfloor \frac{(a\bmod c)x+(b\bmod c)}{c} \right\rfloor }^{k_3}
+                    \ x^{k_1 + q}\\
+        &amp;=\sum_{\begin{subarray}{c}0\leq k_1,k_2,k_3\leq p\\ k_1+k_2+k_3=p\end{subarray}}
+                \frac{p!}{k_1!k_2!k_3!}
+                { \left\lfloor \frac{a}{c} \right\rfloor }^{k_1}
+                { \left\lfloor \frac{b}{c} \right\rfloor }^{k_2}
+                \sum_{x=0}^n
+                    { \left\lfloor \frac{(a\bmod c)x+(b\bmod c)}{c} \right\rfloor }^{k_3}
+                    \ x^{k_1 + q}\\
+    \end{aligned}</span></p>
+<h2 class="unnumbered" id="case-2-ab-c">case 2: <span class="math inline">a,b &lt; c</span></h2>
+<p><span class="math display">\begin{aligned}
+        S
+        &amp;=\sum_{x=0}^n { \left\lfloor \frac{ax+b}{c} \right\rfloor }^p x^q\\
+    \end{aligned}</span></p>
+<h1 id="code">code</h1>
+<h1 id="reference">reference</h1>
+<ul>
+<li><p><a href="https://oi-wiki.org/math/euclidean/">OI-wiki: 类欧几里得算法</a></p></li>
+<li><p><a href="https://blog.csdn.net/qq_39972971/article/details/94618394">XuYiXuan blog: LOJ138</a></p></li>
+<li><p><a href="https://loj.ac/p/138">LOJ138 类欧几里得算法</a></p></li>
+</ul>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>比如LOJ上面有<span class="math inline">p+q\leq 10,\ a,b,c,n\leq 10^9</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</body>
+</html>

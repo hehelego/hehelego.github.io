@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>杂谈the reason why i prefer immutable</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="杂谈the-reason-why-i-prefer-immutable">杂谈:the reason why i prefer immutable</h2>
+<h3 id="一些常规声明">一些常规声明</h3>
+<ul>
+<li>本文作者是spinach/hehelego,没有参考文献.</li>
+<li>目前无稳定时间用于维护我写的文章,但如果文章中出现任何问题,请联系我,我很重视文章质量.</li>
+</ul>
+<blockquote>
+<p>这是一篇杂谈文,没有什么实际意义,可以当成是我写的日记.</p>
+<p>这里我会举一个滥用可变性写出的垃圾程序,一个c++编程中常遇到的UB,聊聊它的问题(并且安利rust). <strong>我不是要捧rust踩go,不少语言都允许你写出这样的有害且危害可扩散的程序.不论用什么语言,都应当避免出现这些问题,当然有一个靠谱的编译器让你不能轻易写出这种东西,会有一定帮助.</strong></p>
+</blockquote>
+<h3 id="一个例子in-go-lang">一个例子(in go-lang)</h3>
+<p>这是一个可变性+不严格的引用检查所带来的迷惑问题, 也许有人会把它(或者类似的东西)当作面试题来考察程序员是否了解语言中的“特性”.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="st">&quot;fmt&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> twoClosure(base <span class="dt">int</span>) (<span class="kw">func</span>(<span class="dt">int</span>)(<span class="dt">int</span>),<span class="kw">func</span>(<span class="dt">int</span>)<span class="dt">int</span>){</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    fa := <span class="kw">func</span>(v <span class="dt">int</span>) <span class="dt">int</span>{</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        base+=v</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> base</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    fs := <span class="kw">func</span>(v <span class="dt">int</span>) <span class="dt">int</span>{</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        base-=v</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> base</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> fa,fs</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main(){</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    fa,fs := twoClosure(<span class="dv">10</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    fmt.Println(fa(<span class="dv">1</span>),fs(<span class="dv">3</span>))</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">//output:11,8</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<hr />
+<p>也许可以找到一个网友写的合理的解释,告诉你这是怎么回事,并尝试说服你,这个程序十分自然,没任何问题. 然而,存在的不一定是合理,比如这个程序就是十分糟糕的.</p>
+<p>一个明显的问题是,它允许一个语句中包含多个有副作用的操作(输出结果的那个语句). 此时计算顺序是对结果有很大影响的,而这个东西,目前没有被统一,比如c/c++中,是未定义行为,主流编译器采用自右向左,而go采用自左向右. 现在来看也许没什么问题,因为它操作的仅仅是一个int,那它是个复杂数据结构呢?它涉及IO操作呢?它有四五个操作呢?你要添加/删除其中一个操作呢? 上面说到的问题,没有一个能够优雅的解决,它非常像是race condition,当你的程序结果由执行顺序决定,而这个顺序不那么明确时,它必然会是bug的源泉.</p>
+<p>另一个明显的问题是,我们不能从类型上读出fa,fs具有关联的可变性,必须深入代码或者文档,寻找潜在的问题. 如果它只是返回一个能产生副作用的闭包,那还不是非常严重,但是现在fa,fs是关联的,不要以为处理两个有副作用的闭包可以轻松推广到3个,4个,你要想清楚,这里的复杂性,关于返回值中有副作用的闭包的数量是指数函数! 这就像是你在c++中管理一个封了一个在heap上的array的struct很方便,很简洁,但是你管理的指针增加时,复杂性不是线性增加,而是指数递增一样. 而此时,你用的是go,不是c++,你不应该有这样的思想负担,如果你的语言默认bindings不可变,那么你在类型签名上面就能知道这个函数潜在的问题(当然你就不会去使用这个写的有问题的畸形的怪胎函数).</p>
+<p>最后一个问题是共享可变性,fa,fs中对于base的修改是关联的,如果要达成这个目的,你完全可以每次传入base的mutable reference,而不是在内部保存这个引用.现在fa,fs都在你手上,将来你要把它们分别交给其他代码呢?交给并发的程序呢?你会发现,这个怪胎函数,只能自己用,拿出去到哪里都是祸害.</p>
+<h4 id="怎么干掉这些问题">怎么干掉这些问题</h4>
+<ul>
+<li>最好的办法,就是干掉可变性!当然这很难做到,不过你可以限制可变性,比如像rust默认bindings,reference是immutable的,并且鼓励程序员编写无副作用的代码,尽量分离pure和IO的部分.</li>
+<li>不然的话,你要各个击破前文提到的问题</li>
+<li><ul>
+<li><p>同一个语句中包含多个副作用. 不好解决,但是如果你保证这些有副作用的动作的顺序可以调换,那么问题就不存在了,所以还是那个问题,尽量分离有副作用的代码和无副作用的代码(主要是它是不是改变了被共享的状态,一个函数可以内部使用变量计算,但是它不影响外部的东西,那么也可以认为它是pure的,这不重要). 如果不能保证顺序无关,那么就切分它,让顺序变得明显.</p></li>
+<li><p>关联的可变性(shared mutable reference)这一点rust解决的可以说很棒,上面这个程序是不可能在safe rust中被写出来的.</p>
+<blockquote>
+<p>就是要禁止某个binding同时被多个可变引用共享,shared states是非常邪恶的东西,如果你要用它,你应该把它控制住,比如你写一个splay tree,写一个双向链表,不要把你用到的共享可变状态暴露出去,你在内部使用,自己确保它的正确性.</p>
+</blockquote></li>
+</ul></li>
+</ul>
+<h3 id="another-examplein-c">another example(in C++)</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="at">static</span> <span class="kw">inline</span> <span class="dt">int</span> f(x,y){ <span class="cf">return</span> x/y; }</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">//f(read(),read());</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> x=read(),y=raed(); f(x,y);</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> u=rand();<span class="bu">std::</span>vector&lt;<span class="dt">int</span>&gt; a(<span class="dv">1024</span>);</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">//std::cin&gt;&gt;u&gt;&gt;a[u];</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>cin&gt;&gt;u;<span class="bu">std::</span>cin&gt;&gt;a[u];</span></code></pre></div>
+<p>这里被注释掉的部分有undefined behavior(C++标准并未钦定这一行为的具体作用). C++标准没有规定表达式中的不同部分求值顺序. 第一个例子中,先后输入的两个整数,哪个成为<code>x</code>,哪个成为<code>y</code>是不确定的(主流编译器会从右到左计算每个参数),而<code>f</code>没有交换律,于是结果不确定. 第二个例子中,即使输入的<code>u</code>不会产生越界,也仍然有挂掉的风险,因为这里很可能先求出了<code>a[u]</code>的引用,而此时<code>u</code>是随机的无意义数据,记为<code>u0</code>,之后才进行输入记这次输入数据为<code>u1</code>,于是之后输入数据不会进入<code>a[u1]</code>而是进入了<code>a[u0]</code>这是个不确定位置.</p>
+<p>还有一个我写OI题经常遇到的锅.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector&lt;<span class="dt">int</span>&gt; vec;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">static</span> <span class="kw">inline</span> <span class="dt">void</span> append(x){vec.push_back(x);}</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> func(<span class="dt">int</span> i){<span class="cf">while</span>(i&gt;<span class="dv">0</span>) append(i--);<span class="cf">return</span> <span class="dt">int</span>(vec.size());}</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main(){</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n=read();</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;n;i++) append(read());</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;n;i++) vec[i]=func(i);</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>这里<code>func</code>向<code>vector</code>中加入元素,可能使得它扩容而移动. 这里的问题和上面一样,程序运行时完全有可能先求出赋值运算符左侧的<code>&amp;vec[i]</code>然后进入<code>func(i)</code>而当它返回时,由于<code>vector</code>进行了扩容移动,提前求出的<code>&amp;vec[i]</code>已经失效了,产生use after free.</p>
+<p>好在我们现在有rust,它的编译期borrow check能够阻值我们写出这种东西. rust不允许borrow mut和其他borrow共存,比如这里尝试对<code>vec[i]</code>进行赋值,我们会持有<code>vec</code>,此时<code>func(i)</code>就不能获取<code>vec</code>的可变引用,进行插入操作,从而防止了问题发生,这样,即使求值顺序不确定,也不会产生非确定性结果.</p>
+<hr />
+<h3 id="so-what">so what?</h3>
+<p>给出一些建议</p>
+<ul>
+<li>严格区分有无副作用的代码,并默认不可变,推崇不可变(在不影响性能的前提下).</li>
+<li>不要共享可变状态,传递可变状态比它要好得多,当然后者也好不到哪里去.</li>
+<li>如果你确实需要共享可变状态,确保它不要泄露,并且想清楚,是不是已经有库解决了你的问题,不要尝试自己随手写一个未经考量的unsafe代码,那是真的unsafe,而经过了精心的设计,实现,验证的unsafe代码是值得被信任,设计,验证unsafe代码也许不是你要解决的问题的核心所在,不要浪费时间.</li>
+<li>不要滥用那些,现在写出来是正确的,可解释的,但是有潜在问题的特性.</li>
+</ul>
+<p>试试把你的程序用rust写或者写成rust的风格(不会让rust编译器不满的风格).</p>
+<p>但是rust并非完美,而且不少rust中的东西是没有形式化验证的.如果没有特殊需求,我更愿意直接使用Haskell,严格分离副作用,pure code不允许side effect,干掉变量这个概念上面的问题都无从出现. 如果你不能直接使用haskell(当然其他类似的语言也可以),可以试试ghc.js这种将Haskell编译为其他语言的东西.</p>
+</body>
+</html>

@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>数论积性函数筛法</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="min_25筛的推导实现与复杂度分析.">min_25筛的推导/实现与复杂度分析.</h2>
+<h3 id="声明">声明</h3>
+<ul>
+<li>这是(af)oier spinach退役前的笔记与解题记录,不能保证内容的严谨性,仅供参考</li>
+<li>如果您发现文章存在可能的错误,请立刻联系我.</li>
+<li><strong>notice</strong>
+<ol type="1">
+<li>本文已经被<code>从998244343开始的筛法教程</code>取代, 它是从我的研学报告整理而来,逻辑性和严密性稍微好一些.<br />
+</li>
+<li>这篇文没有删除是因为其中有较多的题目的讲解和代码. 我不愿意搬运过去,那会使得那篇文章的重点从理论推导变为算法竞赛题目.</li>
+</ol></li>
+</ul>
+<h3 id="参考文献">参考文献:</h3>
+<ol type="1">
+<li>zzt: 2018集训队论文.</li>
+<li>zzt: WC2019讲课课件.</li>
+<li><a href="http://www.cnblogs.com/zzqsblog/p/8302815.html">zzq blog</a></li>
+<li><a href="https://www.cnblogs.com/zbh2047/p/8552551.html">zhb2047 blog</a></li>
+<li><a href="https://blog.xehoth.cc/Extended-Eratosthenes-Sieve/">xehoth blog</a></li>
+<li><a href="https://blog.csdn.net/qq_39972971">cz_xuyixuan blog</a></li>
+<li>简单易懂的质数筛法-过时数论魔法.ppt,一个APIO的讲课内容,出门左转UOJ用户群.</li>
+</ol>
+<h3 id="min_25筛">min_25筛</h3>
+<blockquote>
+<p>min_25提出.复杂度<span class="math inline">O(n^{1-\epsilon})</span>.是近线性复杂度.<br />
+在<span class="math inline">n\leq10^{13}</span>时可以认为是<span class="math inline">O(\frac{n^\frac34}{log\,n})</span>的.<br />
+是OI中最好用的筛法(洲阁筛常数太大…而且不好写不好推导…可以说只有理论价值了).</p>
+</blockquote>
+<p>一个适合于<code>min_25</code>筛法的例子</p>
+<p><span class="math display">
+\begin{aligned}
+&amp;\phi(n,d)=
+\begin{cases}
+\prod_{i=1}^m(p^{c_i}+d) &amp;n=\prod_{i=1}^m{p_i}^{c_i}\\
+1&amp;n=1\\
+\end{cases}
+\\[2em]
+&amp;\phi(p^c,d)=T(p,c,d)=p^c+d\quad (p\text{ is a prime})
+\end{aligned}
+</span></p>
+<h4 id="推导">推导</h4>
+<p>求<span class="math inline">S(n)=\sum_{i=1}^nf(i)</span>.</p>
+<ul>
+<li>满足<span class="math inline">f(p^c)</span>是一个关于<span class="math inline">p,c</span>的<strong>低次</strong>多项式多项式.<br />
+</li>
+<li><span class="math inline">f(n)</span>是积性函数</li>
+</ul>
+<p>考虑<code>提取最小质因子</code>加速计算.</p>
+<p><span class="math display">
+\sum_{i=1}^n f(i)=
+1+\sum_{\begin{subarray}{l} {2\leq p^c \leq n} \\{p \in prime} \end{subarray}}
+f(p^c)
+\left(
+    1+\sum_{
+    \begin{subarray}{l}
+        2\leq x\leq \lfloor\frac{n}{p^c}\rfloor\\
+        minprime_x &gt; p
+    \end{subarray}
+    }f(x)
+\right)
+</span></p>
+<p>对于合数<span class="math inline">x</span>必定有.<span class="math inline">minprime_x\leq \sqrt x \leq \sqrt n</span>继续分类.</p>
+<p><span class="math display">
+1+\sum_{
+\begin{subarray}{l}
+2\leq p^c\leq n\\
+p\in prime\land p\leq \sqrt n
+\end{subarray}}
+f(p^c)(1+\sum_{
+\begin{subarray}{l}
+minprime_x &gt; p\\2\leq x\leq 
+\lfloor\frac{n}{p^c}\rfloor
+\end{subarray}
+}f(x))+
+\sum_{p\in prime\land \sqrt n &lt; p\leq n}f(p)
+</span></p>
+<hr />
+<p>构造辅助函数<span class="math inline">g_{n,m}</span>与<span class="math inline">h_n</span>定义如下:</p>
+<ul>
+<li><span class="math inline">g_{n,m}</span>为<span class="math inline">n</span>以内,最小质因子大于<span class="math inline">m</span>的贡献.</li>
+<li><span class="math inline">h_n</span>为n以内素数的贡献.</li>
+</ul>
+<p><span class="math display">
+g_{n,m}=\sum_{minprime_x &gt; m\\ 2\leq x \leq n}f(x)\\
+h_n=\sum_{p\in prime\\ 2 &lt; p \leq n}f(p)\\
+</span></p>
+<p>寻找<span class="math inline">g</span>的递归式</p>
+<p><span class="math display">
+\begin{aligned}
+g_{n,m}=\sum_{minprime_x &gt; m\\ 2\leq x\leq n}f(x)\\
+=\sum_{p^c\leq n\\p\in prime\\ m &lt; p \leq \sqrt n}
+f(p^c)(1+\sum_{minprime_x &gt; p\\2\leq x \leq \lfloor\frac{n}{p^c}\rfloor}f(x))+\sum_{p\in prime\\ \sqrt n  &lt; p \leq n}\\
+=\sum_{p^c \leq n\\p\in prime\\ m &lt; p \leq \sqrt n}f(p^c)(1+g_{\lfloor\frac{n}{p^c}\rfloor,p})+h_n-h_\sqrt n
+\end{aligned}
+</span></p>
+<p>根据定义<span class="math inline">\sum_{i=1}^n f(i)=S(n)=g_{n,1}+1</span>,如果求出了所有需要用到的<span class="math inline">h_m(\exist i\quad \lfloor\frac{n}{i}\rfloor=m)</span>即可递归求出<span class="math inline">g</span></p>
+<p>解释:观察递归式,根据<span class="math inline">\lfloor\frac{\lfloor\frac{n}{a}\rfloor}{b}\rfloor=\lfloor\frac{n}{ab}\rfloor</span>用到的<span class="math inline">h_m</span>必然是<span class="math inline">\lfloor n/i\rfloor</span>的形式.或者有<span class="math inline">m\leq \sqrt n</span>,需要求解的<span class="math inline">h_m</span>是<span class="math inline">O(\sqrt n)</span>量级的</p>
+<p>如果求出了<span class="math inline">h</span>(素数对于前缀和的贡献).那么暴力递归就能求出<span class="math inline">g</span>了,这里并不需要记忆化,记忆化了也不能优化复杂度.</p>
+<hr />
+<p><span class="math display">
+h_n=\sum_{p\in prime\\ 2 &lt; p \leq n}f(p)\\
+</span> 由于<span class="math inline">f(p^c)</span>是<span class="math inline">G(p,c)</span>,一个<code>低次多项式</code>,把<span class="math inline">f(p)</span>拆成<span class="math inline">\sum_{i=0}^k c_ip^i</span>的形式.我们只需要计算这个.(素数k次幂和) <span class="math display">
+h_n=\sum_{p\in prime\\ 2 &lt; p \leq n}p^k\\
+</span></p>
+<p>定义 <span class="math display">
+L_{n,m}=\sum_{i=2}^n[(i\in prime)\,or\,(minprime_i &gt; prime_m)]\,\,i^k
+</span> 即范围$ (1,n] $ 内满足质数k次幂与,<span class="math inline">minprime_x&gt;p_m</span>(最小质因子足够大,大于第m个素数)的 数的k次幂和.</p>
+<p>也可以说是埃氏筛第m轮筛除后剩余的数字的k次方和.</p>
+<p>考虑一个素数筛的过程(欧拉筛的过程,用最小质因子进行筛除)</p>
+<p>解释:考虑最小质因子为<span class="math inline">p_m</span>的数<span class="math inline">x=p_m\cdot y\leq n \Rightarrow y\leq \lfloor \frac{n}{p_m} \rfloor</span></p>
+<p>但是<span class="math inline">p_m^k \, L_{\lfloor\frac{n}{p_m}\rfloor,m-1}</span>里面包含了满足<span class="math inline">x=q\cdot p_m\leq n,minprime_q &lt; p_m</span> 的<span class="math inline">x</span>,它们并不应该在这一轮中筛掉,而应该在之前用更小的质数筛除.</p>
+<p>再考虑这种<span class="math inline">q</span>,必定是<span class="math inline">q=p_i &lt; p_m,p_i\in prime</span>的,不然<span class="math inline">q</span>已经被筛掉了.所以补上一个<span class="math inline">pre_{m-1}</span>,这样找到的<span class="math inline">x=p_m\cdot y</span>就是我们本轮需要筛除的数了.</p>
+<p>这样做扣除且仅扣除了所有满足<span class="math inline">x\not \in prime,x\leq n,minprime_x=p_m</span>的<span class="math inline">x</span>所以筛除的正确性得到了保证.</p>
+<p><span class="math display">
+L_{n,m}=L_{n,m-1}-p_m^k(L_{\lfloor\frac{n}{p_m}\rfloor,m-1}-pre_{m-1})\\
+pre_m=\sum_{i=1}^m prime_i^k
+</span></p>
+<p>如果<span class="math inline">p_m^2&gt;n</span>了那么不需要转移…有<span class="math inline">L_{n,m}=L_{n,m-1}</span>理由如下.</p>
+<p>设最小质因子大于<span class="math inline">p_j</span>的最小合数为<span class="math inline">x</span>必定有<span class="math inline">x\geq p_j^2&gt;</span> n使用<span class="math inline">p_j</span>不能再<code>不重复地</code>筛掉<span class="math inline">[1,i]</span>内的非质数.(可以考虑埃试筛的过程.这时,用<span class="math inline">p_j</span>去筛<span class="math inline">[1,n]</span>中的倍数.这些合数已经被更小的质数筛过了,应该从<span class="math inline">p_j^2</span>开始筛)</p>
+<h4 id="复杂度">复杂度</h4>
+<p>杜教筛的复杂度. <span class="math display">
+\sum_{i=1}^n (f*g)(i)=\sum_{i=1}^n 
+\sum_{d|i}f(d)g(\frac{i}{d})=\sum_{d=1}^n f(d)\sum_{i=1}^{\lfloor\frac{n}{d}\rfloor}g(i)\\
+let\,S(n)=\sum_{i=1}^ng(i)\\
+\sum_{i=1}^n (f*g)(i)=\sum_{d=1}^n f(d)S(\lfloor\frac{n}{d}\rfloor)\\
+S(n)=\sum_{i=1}^n (f*g)(i)-\sum_{d=2}^nf(d)S(\lfloor\frac{n}{d}\rfloor)\\
+</span> 由于采用了记忆化搜索,每个状态只会向下递归一次,我们可以考虑总转移次数来估计复杂度.即考虑每个状态会依赖多少状态,这会导致算法到hashmap中查询之前的计算结果.考虑<span class="math inline">x</span>依赖<span class="math inline">S_x=\{d_1,d_2,d_3\dots d_n\}</span>.那么对复杂度的贡献为$S_x <span class="math inline">,而</span>S_x<span class="math inline">是</span>{,|, dn,dN }<span class="math inline">从而</span>S_x =O(x)<span class="math inline">.然后进行分类计算,</span>d,<span class="math inline">中至少有一个不超过</span>n$,枚举这个数进行计算. $$ T(n)=<em>{i=1}^n i+ </em>{i=1}^n  _0^n xdx+_0^ndx\</p>
+<p>_0^n xdx+_0^ndx= O(n<sup>{})+O(n</sup> n<sup>{})=O(n</sup>) $$</p>
+<p>筛法求<span class="math inline">h_n</span>的复杂度分析.这里由于涉及了对数积分,比较复杂,我们进行一些估计并且利用Wolfram Alpha来计算. $$ (n)=<em>{xn}[xprime]=O()\ T(n)=</em>{i=1}^n (i)+_{i=1}^n ()\</p>
+<p>_0^n dx +_0^n =O() $$</p>
+<ul>
+<li>筛出<span class="math inline">h_n</span>的复杂度为<span class="math inline">O(\frac{n^{\frac34}}{log\,n})</span>.</li>
+<li>DFS计算<span class="math inline">g</span>这部分是玄学的<span class="math inline">O(n^{1-\epsilon})</span>近线性复杂度,不过<span class="math inline">n\leq 10^{13}</span>时可以认为是<span class="math inline">O(\frac{n^{\frac34}}{log\,n})</span></li>
+</ul>
+<h4 id="代码实现">代码实现</h4>
+<p>如何正确地实现<code>Sieve of Eratosthenes</code>,<code>Euler's Sieve</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> vis[N],prime[N],cnt;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> sieve(<span class="dt">int</span> n){</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    vis[<span class="dv">1</span>]=<span class="dv">1</span>;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">2</span>;i*i&lt;=n;i++) <span class="cf">if</span>(!vis[i]){</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        prime[++cnt]=i;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span>(<span class="dt">int</span> j=i*i;j&lt;=n;j+=i) vis[j]=<span class="dv">1</span>;</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> vis[N],prime[N],cnt,minp[N],pk[N];</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> sieve(<span class="dt">int</span> n){</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    vis[<span class="dv">1</span>]=<span class="dv">1</span>;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">2</span>;i&lt;=n;i++){</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(!vis[i]){</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            prime[++cnt]=i;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            minp[i]=i;</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            pk[i]=<span class="dv">1</span>;</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span>(<span class="dt">int</span> j=<span class="dv">1</span>;j&lt;=cnt&amp;&amp;i*prime[j]&lt;=n;j++){</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            vis[i*prime[j]]=<span class="dv">1</span>;</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            minp[i*prime[j]]=prime[j];</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span>(i%prime[j]==<span class="dv">0</span>){</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                pk[i*prime[j]]=pk[i]+<span class="dv">1</span>;</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span>;</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            pk[i*prime[j]]=<span class="dv">1</span>;</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<hr />
+<p>预处理<span class="math inline">\sqrt n</span>以内的质数与<span class="math inline">pre_x=\sum_{i=1}^x prime_x^k</span>.</p>
+<p>找到<span class="math inline">m,\exist i\,\lfloor\frac{n}{i}\rfloor=m</span>,这些m的h是需要计算的.共<span class="math inline">O(\sqrt n)</span>项,初始化<span class="math inline">h(m)=\sum_{i=2}^mi^k</span></p>
+<p>从小到大枚举<span class="math inline">prime_j</span>,从m=n开始到<span class="math inline">m\geq p_j^2</span>的<span class="math inline">m=\lfloor\frac{n}{d}\rfloor</span>向下枚举,进行筛除操作<span class="math inline">h(m)=h(m)-p_j^k(h(\lfloor\frac{m}{p_j}\rfloor)-pre_{m-1})</span></p>
+<p><span class="math inline">\sum_{i=1}^nf(i)=g_{n,1}+1</span>.进入递归求解,这里不需要记忆化.</p>
+<hr />
+<p>下面是<code>SPOJ DIVCNT K</code>的代码,朴素实现,没有使用上面提到的技巧去掉hashmap,也没有什么常数优化.</p>
+<p>之后会写求更复杂度的积性函数前缀和以及部分并非积性的函数(典型的是最大/最小/次大次小质因子)</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;ctime&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unordered_map&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bitset&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std;</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">long</span> Int;</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N=<span class="dv">10000000</span>+<span class="dv">10</span>;</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> vis[N],prime[N],cnt,pre[N];</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> <span class="dt">void</span> init(){</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">2</span>;i&lt;N;i++){</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        pre[i]=pre[i-<span class="dv">1</span>]+(vis[i]==<span class="dv">0</span>);</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(!vis[i]) prime[++cnt]=i;</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span>(<span class="dt">int</span> j=<span class="dv">1</span>;j&lt;=cnt&amp;&amp;<span class="dv">1</span><span class="bu">LL</span>*i*prime[j]&lt;N;j++){</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            vis[i*prime[j]]=<span class="dv">1</span>;</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span>(i%prime[j]==<span class="dv">0</span>) <span class="cf">break</span>;</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> SPINACH{</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    Int n,k,h[N],m;</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    unordered_map&lt;Int,<span class="dt">int</span>&gt; id;</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">inline</span> Int geth(Int x){ <span class="cf">return</span> (k+<span class="dv">1</span>)*(x&lt;N?pre[x]:h[id[x]]); }</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    Int g(Int n,Int m){</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        m++; <span class="cf">if</span>(prime[m]&gt;n) <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        Int s=<span class="dv">0</span>;</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span>(m&lt;=cnt&amp;&amp;<span class="dv">1</span><span class="bu">LL</span>*prime[m]*prime[m]&lt;=n){</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>            Int p=prime[m],pc=p,c=<span class="dv">1</span>;</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span>(pc&lt;=n){</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                s+= (k*c+<span class="dv">1</span>)*(<span class="dv">1</span>+g(n/pc,m));</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>                pc=pc*p;c++;</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>            m++;</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> s+(geth(n)-geth(prime[m-<span class="dv">1</span>]));</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    Int solve(Int n,Int _k){ id.clear();</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>        k=_k;</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>        Int l=<span class="dv">1</span>,q=<span class="dv">0</span>;m=<span class="dv">0</span>;</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span>(l&lt;=n){</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>            q=n/l; l=n/q+<span class="dv">1</span>;</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>            h[id[q]=++m]=(q-<span class="dv">1</span>);</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">1</span>;i&lt;=cnt&amp;&amp;<span class="dv">1</span><span class="bu">LL</span>*prime[i]*prime[i]&lt;=n;i++){</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>            Int p=prime[i]; l=<span class="dv">1</span>;q=<span class="dv">0</span>;m=<span class="dv">0</span>;</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span>(l&lt;=n){</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>                q=n/l; l=n/q+<span class="dv">1</span>;</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span>(p*p&gt;q) <span class="cf">break</span>;</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>                h[++m]-=(h[id[q/p]]-<span class="dv">1</span><span class="bu">LL</span>*(i-<span class="dv">1</span>));</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span>+g(n,<span class="dv">0</span>);</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main(){</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    ios::sync_with_stdio(<span class="dv">0</span>);</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    cin.tie(<span class="dv">0</span>); cout.tie(<span class="dv">0</span>);</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>    init();</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> T;cin&gt;&gt;T; Int n,k;</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(T--){</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>        cin&gt;&gt;n&gt;&gt;k;</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>        cout&lt;&lt;SPINACH::solve(n,k)&lt;&lt;<span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span>;</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>这里是使用了小技巧去掉hashmap的写法.效率足够对付大多数题目.多组询问记得遍历<span class="math inline">\lfloor\frac{n}{i}\rfloor</span>清空. <span class="math display">
+\mathrm{at}(x)=
+\begin{cases}
+pre_0[x] &amp;x \leq \sqrt n\\
+pre_1[x] &amp;x &gt; \sqrt n
+\end{cases}
+</span></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;ctime&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bitset&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std;</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">long</span> Int</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N=<span class="dv">1000000</span>+<span class="dv">10</span>;</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> vis[N],prime[N],cnt,pre[N];</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> <span class="dt">void</span> init(){</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">2</span>;i&lt;N;i++){</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        pre[i]=pre[i-<span class="dv">1</span>]+(vis[i]==<span class="dv">0</span>);</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(!vis[i]) prime[++cnt]=i;</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span>(<span class="dt">int</span> j=<span class="dv">1</span>;j&lt;=cnt&amp;&amp;<span class="dv">1</span><span class="bu">LL</span>*i*prime[j]&lt;N;j++){</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            vis[i*prime[j]]=<span class="dv">1</span>;</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span>(i%prime[j]==<span class="dv">0</span>) <span class="cf">break</span>;</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> SPINACH{</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    Int n,k,h[N];</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    Int pre0[N],pre1[N];</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">inline</span> Int&amp; at(Int x){ <span class="cf">return</span> (x*x&lt;=n)?pre0[x]:pre1[n/x]; }</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">inline</span> Int geth(Int x){ <span class="cf">return</span> (k+<span class="dv">1</span>)*(x&lt;N?pre[x]:at(x)); }</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    Int g(Int n,Int m){</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        m++; <span class="cf">if</span>(prime[m]&gt;n) <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        Int s=<span class="dv">0</span>;</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span>(m&lt;=cnt&amp;&amp;<span class="dv">1</span><span class="bu">LL</span>*prime[m]*prime[m]&lt;=n){</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            Int p=prime[m],pc=p,c=<span class="dv">1</span>;</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span>(pc&lt;=n){</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>                s+= (k*c+<span class="dv">1</span>)*(<span class="dv">1</span>+g(n/pc,m));</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>                pc=pc*p;c++;</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>            m++;</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> s+(geth(n)-geth(prime[m-<span class="dv">1</span>]));</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    Int solve(Int _n,Int _k){</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>        n=_n; k=_k;</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        Int l1,q=<span class="dv">0</span>;</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span>(l&lt;=n){</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>            q=n/l; l=n/q+<span class="dv">1</span>;</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>            at(q)=(q-<span class="dv">1</span>);</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">1</span>;i&lt;=cnt&amp;&amp;<span class="dv">1</span><span class="bu">LL</span>*prime[i]*prime[i]&lt;=n;i++){</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>            Int p=prime[i]; l=<span class="dv">1</span>;q=<span class="dv">0</span>;</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span>(l&lt;=n){</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>                q=n/l; l=n/q+<span class="dv">1</span>;</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span>(p*p&gt;q) <span class="cf">break</span>;</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>                at(q)-=(at(q/p)-<span class="dv">1</span><span class="bu">LL</span>*(i-<span class="dv">1</span>));</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span>+g(n,<span class="dv">0</span>);</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main(){</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>    ios::sync_with_stdio(<span class="dv">0</span>);</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>    cin.tie(<span class="dv">0</span>); cout.tie(<span class="dv">0</span>);</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>    init();</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> T;cin&gt;&gt;T; Int n,k;</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(T--){</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>        cin&gt;&gt;n&gt;&gt;k;</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>        cout&lt;&lt;SPINACH::solve(n,k)&lt;&lt;<span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span>;</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h4 id="例题">例题</h4>
+<ul>
+<li>SPOJ divcnt</li>
+</ul>
+<p>系列题目,divcnt即为(counting divisor),约数个数计数问题.有四题,均为min_25提供.</p>
+<ul>
+<li><span class="math inline">\sum_{i=1}^n\sigma_0(i)</span> 其中 <span class="math inline">n\leq 2^{64}</span></li>
+<li><span class="math inline">\sum_{i=1}^n\sigma_0(i^2)</span> 其中 <span class="math inline">n\leq 10^{12}</span></li>
+<li><span class="math inline">\sum_{i=1}^n\sigma_0(i^3)</span> 其中 <span class="math inline">n\leq 10^{11}</span></li>
+<li><span class="math inline">\sum_{i=1}^n \sigma_0(i^k)</span> 其中 <span class="math inline">n\leq 10^{10}</span></li>
+</ul>
+<p>第一个是<a href="https://en.wikipedia.org/wiki/Stern–Brocot_tree">Stern Brocot Tree</a>的题,具体做法可以在<code>参考文献1</code>中学习,是一个典型的论文题.<br />
+第二个和第三个,是推式子+反演+卷积优化求和(杜教筛),但是可以使用本文提供的min_25筛通过.<br />
+最后一个是min_25筛的板子题,事实上,这个题也有<span class="math inline">O(n^\frac23)</span>的做法,不过国内没有参考资料,可以自行找min_25提供的算法或者查阅相关论文学习.</p>
+<ul>
+<li>LOJ6053 简单的函数</li>
+</ul>
+<p>给定一个积性函数<span class="math inline">f(p^c)=p\oplus c</span>,求<span class="math inline">\sum_{i=1}^n f(i)\quad n\leq 10^{10}</span>,那个<span class="math inline">\oplus</span>是位运算xor</p>
+<p><span class="math display">
+f(p)=
+\begin{cases}
+p+1 &amp; p=2\\
+p-1 &amp; p&gt; 2
+\end{cases}
+\quad 
+f(p^c)=p\oplus c
+</span> 直接套公式(雾)</p>
+<p>小心爆long long…小心爆ull,小心爆int128…我这份代码重写三次才过的.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std;</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">long</span> UInt;</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> Int;</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N=<span class="dv">300000</span>+<span class="dv">10</span>;</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> Int mod=(Int)(<span class="fl">1e9</span>)+<span class="dv">7</span><span class="bu">LL</span>;</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>Int qpow(Int a,Int p){</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(p==<span class="dv">0</span>) <span class="cf">return</span> <span class="dv">1</span>;</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    Int r=qpow(a,p&gt;&gt;<span class="dv">1</span>);</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    r=r*r%mod;</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (p&amp;<span class="dv">1</span>)?(r*a%mod):r;</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>Int inv2;</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>UInt n;</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> vis[N],prime[N],cnt;</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>Int pre0[N],pre1[N];</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>UInt qwq[N];</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> SQRTN=<span class="dv">0</span>;</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> init(){</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">2</span>;i&lt;N;i++){</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        pre0[i]=pre0[i-<span class="dv">1</span>];</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        pre1[i]=pre1[i-<span class="dv">1</span>];</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        qwq[i]=qwq[i-<span class="dv">1</span>];</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(!vis[i]){</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>            prime[++cnt]=i;</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>            pre0[i]++;</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>            pre1[i]=(pre1[i]+i)%mod;</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span>(<span class="dt">int</span> j=<span class="dv">1</span>;j&lt;=cnt&amp;&amp;prime[j]*i&lt;N;j++){</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>            vis[i*prime[j]]=<span class="dv">1</span>;</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span>(i%prime[j]==<span class="dv">0</span>) <span class="cf">break</span>;</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="co">// f(p) = p-1 (p&gt;2)</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co">// f(p=2) = (p=2)+1</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>Int pre0A[N],pre1A[N];</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>Int pre0B[N],pre1B[N];</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> Int&amp; at(UInt x,<span class="dt">int</span> y){ <span class="co">// x*x&lt;=n,overflow uint64!</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(x&lt;=SQRTN) <span class="cf">return</span> y?pre1A[x]:pre0A[x];</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y?pre1B[n/x]:pre0B[n/x];</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> Int geth(UInt x){</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    Int ret=<span class="dv">2</span>*(x&gt;=<span class="dv">2</span>);</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(x&lt;N) ret+=( (pre1[x]-pre0[x])%mod );</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> ret+=( (at(x,<span class="dv">1</span>)-at(x,<span class="dv">0</span>))%mod );</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (ret%mod+mod)%mod;</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>Int g(UInt n,<span class="dt">int</span> m){</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    m++; <span class="cf">if</span>(<span class="dv">1</span><span class="bu">ULL</span>*prime[m]&gt;n) <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    Int s=<span class="dv">0</span>;</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(m&lt;=cnt&amp;&amp;<span class="dv">1</span><span class="bu">ULL</span>*prime[m]*prime[m]&lt;=n){</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>        UInt p=prime[m],pc=p,c=<span class="dv">1</span>;</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span>(pc&lt;=n){</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>            s=(s+((p^c)%mod)*(<span class="dv">1</span>+g(n/pc,m))%mod)%mod;</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>            c++;pc=pc*p;</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>        m++;</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>    Int tmp=( (geth(n)-geth(prime[m-<span class="dv">1</span>]))%mod+mod)%mod;</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (s+tmp)%mod;</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> Int s1(Int x){ x%=mod; <span class="cf">return</span> x*(x+<span class="dv">1</span>)%mod*inv2%mod; }</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> Int sub(Int a,Int b){</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    a=(a%mod+mod)%mod;</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>    b=((-b)%mod+mod)%mod;</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (a+b)%mod;</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> Int mul(Int a,Int b){</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>    a=(a%mod+mod)%mod;</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>    b=(b%mod+mod)%mod;</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a*b%mod;</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>Int solve(){</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>    UInt l=<span class="dv">1</span>,q=<span class="dv">0</span>;</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(l&lt;=n){</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>        q=n/l; l=n/q+<span class="dv">1</span>;</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>        at(q,<span class="dv">0</span>)=(q-<span class="dv">1</span>);</span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>        at(q,<span class="dv">1</span>)=(s1(q)+mod-<span class="dv">1</span>)%mod;</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">1</span>;i&lt;=cnt&amp;&amp;<span class="dv">1</span><span class="bu">ULL</span>*prime[i]*prime[i]&lt;=n;i++){</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>        l=<span class="dv">1</span>;q=<span class="dv">0</span>;Int p=prime[i];</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span>(l&lt;=n){</span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>            q=n/l; l=n/q+<span class="dv">1</span>;</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span>(p*p&gt;q) <span class="cf">break</span>;</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>            <span class="co">//at(q,0)-=(at(q/p,0)-(i-1));</span></span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>            <span class="co">//at(q,1)-=p*(at(q/p,1)-pre1[i-1]);</span></span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>            at(q,<span class="dv">0</span>)=sub(at(q,<span class="dv">0</span>),sub(at(q/p,<span class="dv">0</span>),pre0[p-<span class="dv">1</span>]));</span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>            at(q,<span class="dv">1</span>)=sub(at(q,<span class="dv">1</span>),mul(p,sub(at(q/p,<span class="dv">1</span>),pre1[p-<span class="dv">1</span>])));</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>    Int ret=<span class="dv">1</span>+g(n,<span class="dv">0</span>);</span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret%mod;</span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main(){</span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>    cin&gt;&gt;n; SQRTN=sqrt(n);</span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>    inv2=qpow(<span class="dv">2</span>,mod-<span class="dv">2</span>);</span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>    init();</span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>    cout&lt;&lt;solve()&lt;&lt;endl;</span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ul>
+<li>UOJ Round 13. C:sanrd</li>
+</ul>
+<p>求<span class="math inline">\sum_{i=1}^nf(i)</span>,其中<span class="math inline">f(i)=second\_max(\{p\cdot k\})</span>即质因子可重集合的次大元素.定义<span class="math inline">f(p)=0,f(1)=0</span></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;ctime&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cassert&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std;</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> Int;</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N=<span class="dv">1000000</span>+<span class="dv">10</span>;</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> vis[N],prime[N],cnt;</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> init(){</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">2</span>;i&lt;N;i++){</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(!vis[i]) prime[++cnt]=i;</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span>(<span class="dt">int</span> j=<span class="dv">1</span>;j&lt;=cnt&amp;&amp;i*prime[j]&lt;N;j++){</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            vis[i*prime[j]]=<span class="dv">1</span>;</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span>(i%prime[j]==<span class="dv">0</span>) <span class="cf">break</span>;</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>Int pre0[N],pre1[N],n;</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>Int&amp; at(Int m){ <span class="cf">return</span> <span class="fl">1.0</span>*m*m&lt;=n?pre0[m]:pre1[n/m]; }</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>Int g(Int n,<span class="dt">int</span> m){</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    m++; <span class="cf">if</span>(n&lt;=<span class="dv">2</span>||prime[m]&gt;n) <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    Int s=<span class="dv">0</span>;</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(prime[m]*prime[m]&lt;=n&amp;&amp;m&lt;=cnt){</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>        Int p=prime[m],c=<span class="dv">1</span>,pc=p;</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span>(pc*p&lt;=n){</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>            s+=(g(n/pc,m)+p*(at(n/pc)-(m-<span class="dv">1</span>)));</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>            pc=pc*p;c++;</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        m++;</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> s;</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>Int solve(Int _n){</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    ::n=_n;</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    Int l=<span class="dv">1</span>,q=<span class="dv">0</span>;</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(l&lt;=n){</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>        q=n/l; l=n/q+<span class="dv">1</span>;</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>        at(q)=q-<span class="dv">1</span>;</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">1</span>;i&lt;=cnt&amp;&amp;<span class="dv">1</span><span class="bu">LL</span>*prime[i]*prime[i]&lt;=n;i++){</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>        Int p=prime[i];</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>        l=<span class="dv">1</span>; <span class="cf">while</span>(l&lt;=n){</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>            q=n/l; l=n/q+<span class="dv">1</span>;</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span>(p*p&gt;q) <span class="cf">break</span>;</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>            at(q)-=(at(q/p)-(i-<span class="dv">1</span>));</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> g(n,<span class="dv">0</span>);</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main(){</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    init();</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>    Int l,r;cin&gt;&gt;l&gt;&gt;r;</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    cout&lt;&lt;solve(r)-solve(l-<span class="dv">1</span>)&lt;&lt;endl;</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>UR 13,sanrd现在还不懂为什么….</p>
+<p><strong>陈牧歌@PKU的课件里面对于本题的推导有些问题</strong>.UOJ官方题解提供了一个类似洲阁筛的做法.</p>
+<p>代码抄的<a href="https://www.cnblogs.com/cjoieryl/">ppl_blog</a></p>
+<p><a href="http://uoj.ac/submission/331850">UOJ提交记录</a></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Int g(Int n,<span class="dt">int</span> m){</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    m++; <span class="cf">if</span>(n&lt;=<span class="dv">2</span>||prime[m]&gt;n) <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    Int s=<span class="dv">0</span>;</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(prime[m]*prime[m]&lt;=n&amp;&amp;m&lt;=cnt){</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        Int p=prime[m],c=<span class="dv">1</span>,pc=p;</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span>(pc&lt;=n){</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            Int r=at(n/pc)-(m-<span class="dv">1</span>);</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span>(r&gt;<span class="dv">0</span>) s+=(g(n/pc,m)+p*(at(n/pc)-(m-<span class="dv">1</span>)));</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span> s+=g(n/pc,m);</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            pc=pc*p;c++;</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        m++;</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> s;</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>这样就清晰了,<span class="math inline">f(p^c\cdot q)=p\quad q\in prime,q\geq p</span>,</p>
+<p>对于这种东西需要<strong>乘一个大于等于p的质数</strong>,所以要求<span class="math inline">\lfloor\frac{n}{p^c}\rfloor\geq p \Rightarrow p^c\cdot p\leq n</span></p>
+<p>如果<span class="math inline">p</span>不是次大质因子,那么递归去处理,按照<span class="math inline">g_{n,m}</span>的定义,是正确的.</p>
+<hr />
+<p><a href="https://www.lydsy.com/JudgeOnline/problem.php?id=4916">BZOJ 4916</a> <span class="math display">\sum_{i=1}^n\mu(i^2) \quad \sum_{i=1}^n\varphi(i^2)</span> 首先第一个是1…然后考虑第二个.</p>
+<ol type="1">
+<li>这是个积性函数,质因子贡献独立.</li>
+<li>这个函数在质数幂出的取值可以快速求出,其中在质数出的取值是关于<span class="math inline">p</span>的二次多项式.</li>
+</ol>
+<p>套一下式子.没了.范围超小,跑得飞起.不过我们还是来考虑一下正解<span class="math inline">O(n^\frac23)</span>的做法吧.如图.没了</p>
+<p>let <span class="math inline">n=\prod_{i=1}^m p_i^{k_i}</span>, then:</p>
+<ul>
+<li>for <span class="math inline">\varphi(n^2)</span></li>
+</ul>
+$
+<p>$</p>
+<ul>
+<li>Find the recurrence relation using Dirichlet Convolution</li>
+</ul>
+$
+<p>$</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cctype&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cassert&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N=<span class="dv">200000</span>+<span class="dv">10</span>;</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> Int;</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> Int mod=(Int)(<span class="fl">1e9</span>)+<span class="dv">7</span><span class="bu">LL</span>;</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>Int qpow(Int a,Int p){</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    Int r=<span class="dv">1</span>; a=(a%mod+mod)%mod;</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(p){</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(p&amp;<span class="dv">1</span>) r=r*a%mod;</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        a=a*a%mod;</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>        p&gt;&gt;=<span class="dv">1</span>;</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> r;</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> Int inv(Int x){ <span class="cf">return</span> qpow(x,mod-<span class="dv">2</span>); }</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> vis[N],prime[N],cnt,phi[N];</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> P{</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    Int pre1,pre2;</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    P(){ pre1=pre2=<span class="dv">0</span>; }</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    Int get(){ <span class="cf">return</span> (pre2-pre1+mod)%mod; }</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>}pre[N];</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> init(){</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    vis[<span class="dv">1</span>]=<span class="dv">1</span>; phi[<span class="dv">1</span>]=<span class="dv">1</span>;</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">2</span>;i&lt;N;i++){</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        pre[i]=pre[i-<span class="dv">1</span>];</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(!vis[i]){</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>            pre[i].pre1=(pre[i].pre1+i)%mod;</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>            pre[i].pre2=(pre[i].pre2+<span class="dv">1</span><span class="bu">LL</span>*i*i)%mod;</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>            prime[++cnt]=i;</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>            phi[i]=i-<span class="dv">1</span>;</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span>(<span class="dt">int</span> j=<span class="dv">1</span>;j&lt;=cnt&amp;&amp;i*prime[j]&lt;N;j++){</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>            vis[i*prime[j]]=<span class="dv">1</span>;</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span>(i%prime[j]==<span class="dv">0</span>){</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>                phi[i*prime[j]]=phi[i]*prime[j];</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span>;</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>            phi[i*prime[j]]=phi[i]*(prime[j]-<span class="dv">1</span>);</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>P A[N],B[N];</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n;</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> P&amp; at(<span class="dt">int</span> m){ <span class="cf">return</span> (<span class="fl">1.0</span>*m*m&lt;=n)?A[m]:B[n/m]; }</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> Int s1(Int m){</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">static</span> Int inv2=inv(<span class="dv">2</span>);</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>    m%=mod;</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> m*(m+<span class="dv">1</span>)%mod*inv2%mod;</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> Int s2(Int m){</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">static</span> Int inv6=inv(<span class="dv">6</span>);</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>    m%=mod;</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="dv">2</span>*m+<span class="dv">1</span>)%mod*(m+<span class="dv">1</span>)%mod*m%mod*inv6%mod;</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>Int geth(<span class="dt">int</span> n){</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">const</span> P &amp;x=at(n);</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (x.pre2-x.pre1+mod)%mod;</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>Int g(<span class="dt">int</span> n,<span class="dt">int</span> m){</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>    m++;</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(prime[m]&gt;n) <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>    Int ret=<span class="dv">0</span>;</span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(<span class="fl">1.0</span>*prime[m]*prime[m]&lt;=n){</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>        Int p=prime[m],pc=p,fpc=p*(p-<span class="dv">1</span>)%mod;</span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span>(pc&lt;=n){</span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>            ret=(ret+fpc*(<span class="dv">1</span>+g(n/pc,m))%mod)%mod;</span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>            pc=pc*p;</span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>            fpc=fpc*p%mod*p%mod;</span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>        m++;</span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>    Int tmp=(geth(n)-geth(prime[m-<span class="dv">1</span>])+mod)%mod;</span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (ret+tmp)%mod;</span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>Int solve(<span class="dt">int</span> _n){</span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>    ::n=_n;</span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> l=<span class="dv">1</span>,r=<span class="dv">0</span>,q=<span class="dv">0</span>;</span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(l&lt;=n){</span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a>        q=n/l; r=n/q;</span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a>        P &amp;to=at(q);</span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a>        to.pre1=(s1(q)-<span class="dv">1</span>+mod)%mod;</span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a>        to.pre2=(s2(q)-<span class="dv">1</span>+mod)%mod;</span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a>        l=r+<span class="dv">1</span>;</span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">1</span>;i&lt;=cnt&amp;&amp;</span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a>            <span class="fl">1.0</span>*prime[i]*prime[i]&lt;=n;i++){</span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a>        Int p=prime[i];</span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>        l=<span class="dv">1</span>;r=<span class="dv">0</span>;q=<span class="dv">0</span>;</span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span>(l&lt;=n){</span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a>            q=n/l; r=n/q;</span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span>(<span class="fl">1.0</span>*p*p&gt;q) <span class="cf">break</span>;</span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a>            P &amp;to=at(q),&amp;from=at(q/p);</span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>            to.pre1-=p*(from.pre1-pre[p-<span class="dv">1</span>].pre1)%mod;</span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a>            to.pre1=(to.pre1%mod+mod)%mod;</span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>            to.pre2-=p*p%mod*(from.pre2-pre[p-<span class="dv">1</span>].pre2)%mod;</span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>            to.pre2=(to.pre2%mod+mod)%mod;</span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>            l=r+<span class="dv">1</span>;</span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span>+g(n,<span class="dv">0</span>);</span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main(){</span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>    init();</span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>    <span class="kw">using</span> <span class="kw">namespace</span> std;</span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n; cin&gt;&gt;n;</span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>    cout&lt;&lt;<span class="dv">1</span>&lt;&lt;endl;</span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>    cout&lt;&lt;solve(n)&lt;&lt;endl;</span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</body>
+</html>

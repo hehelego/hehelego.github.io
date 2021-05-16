@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>离散数学-学习随笔</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="cardinality-of-euclidean-space">cardinality of Euclidean space</h2>
+<p><span class="math inline">|R|=|R^n|</span></p>
+<blockquote>
+<p>e.g. <span class="math inline">|{(0,1)}^2|=|(0,1)|</span></p>
+<p><span class="math display">
+\begin{aligned}
+(a,b)=\left((0.\ a_{0}a_{1}\ldots\right)_{10},\ \left(0.\ b_{0}b_{1}\ldots)\right)_{10}&amp;\to \left(0.\ a_{0}b_{0}a_{1}b_{1}a_{2}b_{2}\ldots\right)_{10}\\
+x=\left(0.\ x_{0}x_{1}x\ldots\right)_{10}&amp;\to ((0.\ x_{0}x_{2}x_{4}\ldots),(0.\ x_{1}x_{3}x_{5}\ldots))
+\end{aligned}
+</span></p>
+</blockquote>
+<h3 id="links">links</h3>
+<ul>
+<li>wikipedia: cardinal numbers</li>
+<li>wikipedia: cardinality of the continuum</li>
+<li>wikipedia: space filling curve</li>
+</ul>
+<h2 id="cantors-theorem">Cantor’s theorem</h2>
+<blockquote>
+<p>Show that <span class="math inline">|A|&lt;|\rho(A)|</span> where <span class="math inline">\rho(A)</span> is the powerset of <span class="math inline">A</span> i.e. <span class="math inline">\rho(A)=\{B\mid B\subseteq A\}</span>.</p>
+</blockquote>
+<ol type="1">
+<li><span class="math inline">|A|\leq |\rho(A)|</span></li>
+</ol>
+<p>Let <span class="math inline">f:A\to \rho(A)</span> where <span class="math inline">f(x)=\{x\}</span>.<br />
+<span class="math inline">x\neq y\implies \{x\}\neq \{y\}</span>.<br />
+A injective function from <span class="math inline">A</span> to <span class="math inline">\rho(A)</span> exists so <span class="math inline">|A|\leq |\rho(A)|</span></p>
+<ol start="2" type="1">
+<li><span class="math inline">|A|\neq |\rho(A)|</span></li>
+</ol>
+<p>Suppose that <span class="math inline">|A|=|\rho(A)|</span>, by definition, exists a function <span class="math inline">f:A\to \rho(A)</span> s.t. <span class="math inline">f</span> is bijective.<br />
+Let <span class="math inline">S=\{x\mid x\not\in f(x)\}</span> and <span class="math inline">s=f^{-1}(S)</span>.</p>
+<ul>
+<li>if <span class="math inline">s\in S</span>, then <span class="math inline">s\not \in f(s)=f(f^{-1}(S))=S</span></li>
+<li>if <span class="math inline">s\not \in S</span>, then <span class="math inline">s \in f(s)=f(f^{-1}(S))=S</span></li>
+</ul>
+<p>contradict. Such a bijective mapping does not exist, <span class="math inline">|A|\neq |\rho(A)|</span></p>
+<h3 id="links-1">links</h3>
+<ul>
+<li>wikipedia: Cantor’s theorem</li>
+<li>Russell’s paradox</li>
+<li>quine</li>
+<li>the halting problem</li>
+</ul>
+<h2 id="halting-problem">halting problem</h2>
+<blockquote>
+<p>determine whether there exists a function <span class="math inline">H</span>.<br />
+<span class="math inline">H:\{\text{Program}\}\times \{\text{Input}\}\to \{\mathbf T,\mathbf F\}</span><br />
+<span class="math inline">\forall p,i\quad H(p,i)=[p(i)\text{ can be computed in finte steps}]</span></p>
+</blockquote>
+<p>Suppose that such <span class="math inline">H</span> exists.<br />
+Let <span class="math inline">G(x)</span> be another program where <code>G(x) = if H(x,x) then loop else return</code>.</p>
+<p>Now consider <span class="math inline">G(G)</span></p>
+<ul>
+<li>if <span class="math inline">H(G,G)=\mathbf T</span> (which indicates that <span class="math inline">G(G)</span> finishes in finite steps), then <span class="math inline">G(G)</span> runs forever.</li>
+<li>if <span class="math inline">H(G,G)=\mathbf F</span> (which indicates that <span class="math inline">G(G)</span> runs forever), then <span class="math inline">G(G)</span> finishes in finite steps.</li>
+</ul>
+<h3 id="extra">extra</h3>
+<p>However, some thing went wrong.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">H</span><span class="ot">::</span> (i<span class="ot">-&gt;</span>o,i) <span class="ot">-&gt;</span> <span class="dt">Bool</span></span></code></pre></div>
+<p>then in <code>H x x</code>, we are expected to have<code>x::i-&gt;o,x::i</code>, which is wired.</p>
+<p>Why this happens.</p>
+<blockquote>
+<p>也许是计算模型不同,turing machine也许不需要“类型”这种东西,<br />
+引入类型,得到的计算模型可以和turing machine等价. 而我认为<code>i-&gt;o</code>与<code>i</code>不同,其实是我不认可无穷递归?所以如果我认为infinte的类型不可存在,那么我的模型其实弱于turing machine?</p>
+</blockquote>
+<h2 id="r-and-powerset-n-have-same-cardinality">R and powerset N have same cardinality</h2>
+<blockquote>
+<p>given any set non empty <span class="math inline">A</span> and a set <span class="math inline">E</span> from its powerset <span class="math inline">S=\rho(A)</span> (<span class="math inline">E\in S</span>) we can define the so-called indicator function <span class="math display">\forall E\in S\quad f_{E}:A\to \{0,1\}\ \text{where}\ f_E(x)=[x\in E]</span></p>
+</blockquote>
+<ol type="1">
+<li><p>consider this function <span class="math inline">f</span> which is injective. <span class="math display">
+f:\rho(\mathbb N)\to \left[0,1\right]
+\quad
+f(S)=\sum_{i=0}^\infty \frac{[i\in S]}{2^{i+1}}
+</span></p></li>
+<li><p>consider this function <span class="math inline">g</span> which is injective.</p></li>
+</ol>
+<p>Given <span class="math inline">x\in [0,1]</span>, let <span class="math inline">s={(x)}_2=(s_0,s_1,s_2\ldots)</span> be its binary representation.<br />
+let <span class="math inline">g(x)=\{i\in \mathbb N\mid s_i=1\}</span><br />
+note: <span class="math inline">1=0.99\ldots=0.\overline{9}</span></p>
+<ol start="3" type="1">
+<li>therefore <span class="math inline">|\rho(\mathbb N)|=|\mathbb R|</span></li>
+</ol>
+<h3 id="extra-1">extra</h3>
+<p>what about this function <span class="math inline">h:\rho(\mathbb N)\to \mathbb N</span></p>
+<p><span class="math display">h(S)=\sum_{i=0}^{\max(S)}[i\in S]2^i</span></p>
+<p>for example <span class="math inline">\{1,3,4,5\}\to {(11101)}_2</span>.<br />
+Can we say that this gives a injective function from <span class="math inline">\rho(\mathbb N)</span> to <span class="math inline">\mathbb N</span>, resulting in <span class="math inline">|\rho(\mathbb N)|\leq \mathbb N</span></p>
+<p><strong>DEFINITELY NOT!</strong></p>
+<p><span class="math inline">h</span> is even not a member of <span class="math inline">\{\rho(\mathbb N)\to \mathbb N\}</span>, if it is, then what is the image of <span class="math inline">\mathbb N</span>?</p>
+<p>Here’s the difference in <span class="math inline">h</span> and <span class="math inline">f</span> - <span class="math inline">f(\mathbb N)=\sum_{i=0}^\infty \frac{1}{2^{i+1}}=1</span> - for <span class="math inline">h</span>, since there <span class="math inline">\max(\mathbb N)</span> is not well defined, <span class="math inline">h(\mathbb N)</span> is not defined.</p>
+<h2 id="quotient-of-integers-are-countable.">quotient of integers are countable.</h2>
+<p><span class="math display">
+\begin{matrix}
+&amp;\frac{1}{1}&amp;\frac{2}{1}&amp;\frac{3}{1}&amp;\dots\\[.3em]
+&amp;\frac{1}{2}&amp;\frac{2}{2}&amp;\frac{3}{2}&amp;\dots\\[.3em]
+&amp;\frac{1}{3}&amp;\frac{2}{3}&amp;\frac{3}{3}&amp;\dots\\[.3em]
+&amp;\frac{1}{4}&amp;\frac{2}{4}&amp;\frac{3}{4}&amp;\dots\\[.3em]
+\end{matrix}
+</span></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>s={}</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>index=<span class="dv">0</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mapping={}</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i in [<span class="fl">2.</span><span class="er">.</span>]{</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j in [<span class="fl">1.</span><span class="er">.i</span>-<span class="dv">1</span>]{</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">auto</span> f=Fraction(j,i-j)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> f <span class="kw">not</span> in s{</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            s.insert(f)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            mapping[f]=index++</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="mathbbn-is-uncountable"><span class="math inline">\{0,1\}^\mathbb{N}</span> is uncountable</h2>
+<p><span class="math inline">S=\{a_n=\{a_0,a_1,a_2\ldots a_k\ldots \}\mid k\in \mathbb N\land (\forall i\ a_i\!\in\!\{0,1\})\}</span></p>
+<p>Suppose it is countable, then there is a bijection between <span class="math inline">\{0,1\}^{\mathbb N}</span> and <span class="math inline">\mathbb N</span></p>
+<pre><code>f(0)={ a[0,0] a[0,1] a[0,2] ... }
+f(1)={ a[1,0] a[1,1] a[1,2] ... }
+f(2)={ a[2,0] a[2,1] a[2,2] ... }
+f(3)={ a[3,0] a[3,1] a[3,2] ... }
+...
+.
+.</code></pre>
+<p>Then what is the preimage of <code>x={ flip(a[0,0]) flip(a[1,1]) flip(a[2,2]) filp(a[3,3]) ... }</code>?<br />
+It turns out that <code>x</code> has no preimage, if not, let <code>k=inverse_f(x)</code>, however <code>x[k]=flip(a[k,k]), f(k)[k]=a[k,k]</code>.<br />
+Thus such bijective does not exists, <span class="math inline">|\{0,1\}^{\mathbb N}| &gt; |\mathbb N|</span></p>
+<h2 id="closed-inteerval-and-open-interval"><span class="math inline">|[0,1)| = |(0,1)|</span> closed inteerval and open interval</h2>
+<ul>
+<li><p><span class="math inline">|(0,1)|\leq |\left[\left.0,1\right)\right.|</span> <span class="math display">
+f:(0,1)\to \left[\left.0,1\right)\right.
+\quad \text{where} \quad
+f(x)=x
+</span> is injective, so <span class="math inline">|(0,1)|\leq |\left[\left.0,1\right)\right.|</span></p></li>
+<li><p><span class="math inline">|(0,1)|\geq |\left[\left.0,1\right)\right.|</span></p></li>
+</ul>
+<p>Consider <span class="math inline">a_n=\{1=2^{-0},2^{-1}\ldots\}=\{2^{-n}\mid n\in \mathbb{N}\}</span></p>
+<p><span class="math display">
+g:\left[\left.0,1\right)\right. \to (0,1)
+\quad \text{where} \quad
+g(x)=\begin{cases}
+\frac{x}{2} &amp; x\in \{a_n\}\\
+x &amp; x\not\in \{a_n\}
+\end{cases}
+</span></p>
+<blockquote>
+<p>that is do the replacement <span class="math inline">a_0\to a_1,\ a_1\to a_2\ldots</span></p>
+</blockquote>
+<h2 id="commonly-used-bijective-counting-for-combination">commonly used bijective counting for combination</h2>
+<blockquote>
+<p>Given <span class="math inline">n,k</span> count subset of <span class="math inline">[n]</span> which satisfies the following constraints.<br />
+- <span class="math inline">|S|=r</span> - <span class="math inline">S=\{x_1,x_2\ldots x_r\}\quad x_1&lt;x_2&lt;x_3\ldots x_r</span> - <span class="math inline">x_{i+1}-x_i&gt;k</span></p>
+</blockquote>
+<p><span class="math inline">x_3-x_2&gt;k,x_2-x_1&gt;k\implies x_3-x-1&gt;2k</span><br />
+and the gerneral case.</p>
+<p><span class="math display">
+\begin{cases}
+&amp;x_2-x_1&gt;k\\
+&amp;x_3-x_2&gt;k\\
+&amp;x_4-x_3&gt;k\\
+&amp;\vdots\\
+&amp;x_r-x_{r-1}&gt;k
+\end{cases}
+\iff
+\begin{cases}
+&amp;x_2-x_1&gt;k\\
+&amp;x_3-x_1&gt;2k\\
+&amp;x_4-x_1&gt;k\\
+&amp;\vdots\\
+&amp;x_r-x_1&gt;(r-1)k
+\end{cases}
+</span></p>
+<p>Consider the mapping <span class="math inline">f</span></p>
+<p><span class="math display">
+\begin{aligned}
+\{x_1,x_2,x_3\ldots x_r\}\to
+y&amp;=\{y_1,y_2,y_3\ldots y_r\}\\
+ &amp;=\{x_1,x_2-k,x_3-2k\ldots x_r-(r-1)k\}
+\end{aligned}
+</span></p>
+<blockquote>
+<p>maps - <span class="math inline">|S|=r</span> - <span class="math inline">S=\{x_1,x_2\ldots x_r\}</span> - <span class="math inline">1\leq x_1&lt;x_2&lt;x_3\ldots x_r\leq n</span> - <span class="math inline">x_{i+1}-x_i&gt;k</span></p>
+<p>to<br />
+- <span class="math inline">|T|=r</span> - <span class="math inline">T=\{y_1,y_2\ldots y_r\}</span> - <span class="math inline">1\leq y_1&lt;y_2&lt;y_3\ldots y_r\leq n-(r-1)k</span></p>
+<p>which is a <span class="math inline">r</span> combination of <span class="math inline">[n-(r-1)k]</span></p>
+</blockquote>
+<p>and we can show that <span class="math inline">f</span> is bijective (injective and surjective).</p>
+<p><span class="math inline">\text{ANS}=\binom{n-(r-1)k}{r}</span></p>
+<h3 id="remark">remark</h3>
+<p>quite hard without the bijection,<br />
+generating function method doesn’t fit.</p>
+<h2 id="recurrence-relationship-of-integer-partition-numbers">recurrence relationship of integer partition numbers</h2>
+<blockquote>
+<p><span class="math display">p_k(n)=\left\vert\left\{ (a_1,a_2,a_3\ldots a_k)\mid \sum_i a_i=\!n\land \forall i\,a_i\!&gt;\!0\land \forall i\, a_i\leq a_{i+1} \right\} \right\vert</span></p>
+</blockquote>
+<h3 id="rr1">RR1</h3>
+<p>theorem: <span class="math inline">n\geq k\implies p_k(n+k)=\sum_{j=1}^k p_j(n)</span></p>
+<p>Let <span class="math inline">S_i=\{(0\leq x_1\leq x_2\ldots x_{i-1}\leq x_i)\mid \land \sum_{j\leq i} x_j=n\}</span> for <span class="math inline">i=1,2\ldots k</span><br />
+and <span class="math inline">T=\{(0\leq x_1\leq x_2\ldots x_{k-1}\leq x_k)\mid \land \sum_{j\leq k} x_j=n+k\}</span></p>
+<p>where <span class="math inline">S_1,S_2\ldots S_k</span> are disjoint.</p>
+<p><span class="math display">
+f:\bigcup_{i=1}^k S_i\to T
+\quad 
+(x_1,x_2\ldots x_i)\to (x_1+1,x_2+1\ldots x_i+1,\ \overbrace{1,1\ldots 1}^{k-i})
+</span></p>
+<p>we can show that this mapping is bijective. Thus <span class="math inline">\sum_{i=1}^k p_i(n)=p_k(n+k)</span></p>
+<h3 id="rr2">RR2</h3>
+<p>theorem: <span class="math inline">n\geq k\implies p_k(n)=p_{k-1}(n-1)+p_{k}(n-k)</span></p>
+<p><span class="math display">
+\begin{aligned}
+&amp;U=\{1\leq x_1\leq x_2\ldots x_k\mid \sum_{i=1}^k x_i=n\}\\
+&amp;S=\{1=x_1\leq x_2\ldots x_k\mid \sum_{i=1}^k x_i=n\}
+\quad T=\{1&lt; x_1\leq x_2\ldots x_k\mid \sum_{i=1}^k x_i=n\}\\
+&amp;U=S\cup T\ \land\ S\cap T=\varnothing\implies p_{k}(n)=p_{k-1}(n-1)+p_k(n-k)
+\end{aligned}
+</span></p>
+<p><span class="math display">
+\begin{aligned}
+F_k(x)&amp;=\sum_{n=0}^\infty p_k(n) x^n =\sum_{n=k}^\infty p_k(n) x^n\\
+&amp;=\sum_{n=k}^\infty p_{k-1}(n-1) x^n + \sum_{n=k}^\infty p_k(n-k) x^n\\
+&amp;=x\sum_{n=k-1}^\infty p_{k-1}(n) x^n + x^k \sum_{n=0}^\infty p_k(n) x^n\\
+&amp;=x F_{k-1}(x) x^n + x^k F_{k}(x)\\
+F_k(x)&amp;=\frac{xF_{k-1}(x)}{1-x^k}\qquad F_0(x)=1\\
+\implies F_k(x)&amp;=x^k\prod_{i=1}^k \frac{1}{1-x^i}
+\end{aligned}
+</span></p>
+<blockquote>
+<p>combinatorics background of the OGF. - <a href="https://en.wikipedia.org/wiki/Partition_(number_theory)">wikipedia: integer partition</a> - Ferrers diagram, Young diagram; young tabuleau; 杨表, 杨氏矩阵</p>
+<p>一个将<span class="math inline">n</span>划分为恰好<span class="math inline">k</span>份的杨表<br />
+经过沿对角线对称,可以得到<br />
+一个将<span class="math inline">n</span>划分为恰好<span class="math inline">n</span>份,每份不超过<span class="math inline">k</span>,且必须有一份为<span class="math inline">k</span>的杨表<br />
+反过来也是一样,所以建立了双射,<br />
+考察后者的生成函数,先选一个<span class="math inline">k</span>,再考虑<span class="math inline">1,2,3\ldots k</span>可以任意选,有<span class="math inline">\prod_{i=1}^k \sum_{j=0}^\infty x^{ij}</span>.</p>
+</blockquote>
+<h2 id="bellset-partition-numbers">Bell(set partition) numbers</h2>
+<h3 id="approach-1">approach 1</h3>
+<blockquote>
+<p>for <span class="math inline">k=1,2,3\ldots n</span>, partition <span class="math inline">A=\{1,2\ldots n\}</span> into <span class="math inline">k</span> non-empty sets <span class="math display">
+\begin{aligned}
+&amp;\sum_{\begin{subarray}{c} a_1+a_2\ldots a_k=n\\ a_1,a_2\ldots a_k&gt;0\end{subarray}}
+\frac{1}{k!}\binom{n}{a_1}\binom{n-a_1}{a_2}\ldots \binom{a_k}{a_k}
+=\sum_{\begin{subarray}{c} a_1+a_2\ldots a_k=n\\ a_1,a_2\ldots a_k&gt;0\end{subarray}}
+\frac{1}{k!}\frac{n!}{\prod_{i=1}^k (a_i!)}\\
+=&amp;n!\frac{1}{k!}\sum_{\begin{subarray}{c} a_1+a_2\ldots a_k=n\\ a_1,a_2\ldots a_k&gt;0\end{subarray}}
+\frac{1!}{\prod_{i=1}^k (a_i!)}\\
+=&amp;n!\frac{1}{k!}[x^n]{\left(\sum_{i=1}^\infty \frac{x^i}{i!}\right)}^k\\
+=&amp;n!\frac{1}{k!}[x^n]{(e^x-1)}^k\\
+\end{aligned}
+</span> take the summation</p>
+</blockquote>
+<p><span class="math display">
+\begin{aligned}
+\sum_n\frac{B_n}{n!}x^n
+&amp;=1+\sum_{n=1}^\infty
+    \frac{\sum_{k=1}^n n!\frac{1}{k!}[x^n] {(e^x-1)}^k}{n!}\\
+&amp;=1+\sum_{n=1}^\infty [x^n]\sum_{k=1}^n \frac{{(e^x-1)}^k}{k!}\\
+&amp;=1+\sum_{n=1}^\infty [x^n]\sum_{k=1}^\infty \frac{{(e^x-1)}^k}{k!}\\
+&amp;=1+\sum_{k=1}^\infty \sum_{n=0}^\infty [x^n]\frac{{(e^x-1)}^k}{k!}\\
+&amp;=1+\sum_{k=1}^\infty \frac{{(e^x-1)}^k}{k!}\\
+&amp;=\sum_{k=0}^\infty \frac{{(e^x-1)}^k}{k!}\\
+&amp;=\exp(e^x-1)
+\end{aligned}
+</span></p>
+<h3 id="approach-2">approach 2</h3>
+<blockquote>
+<p>partition <span class="math inline">A</span> into <span class="math inline">\{A_1,A_2\ldots \}</span> s.t. <span class="math inline">1\in A_1\land |A_1|=k</span> <span class="math display">B_n=\sum_{k=1}^n\binom{n-1}{k-1}B_{n-k}\implies \frac{B_n}{n!}=\sum_{k=1}^n \frac{1}{n}\frac{1}{(k-1)!}\frac{B_{n-k}}{(n-k)!}</span></p>
+</blockquote>
+<p><span class="math display">
+\begin{aligned}
+F(x)
+&amp;=\sum_{n=0}^\infty \frac{B_n}{n!}x^n
+=1+\sum_{n=1}^\infty \sum_{k=1}^n \frac{x^n}{n}\frac{1}{(k-1)!}\frac{B_{n-k}}{(n-k)!}\\
+F&#39;(x)
+&amp;=\sum_{n=1}^\infty \sum_{k=1}^n \frac{x^{k-1}}{(k-1)!}\, \frac{B_{n-k}}{(n-k)!}x^{n-k}\\
+&amp;=\sum_{n=1}^\infty \sum_{k=0}^{n-1} \frac{x^k}{k!}\, \frac{B_{n-k-1}}{(n-k-1)!}x^{n-k-1}\\
+&amp;=\sum_{n=0}^\infty \sum_{k=0}^n \frac{x^k}{k!}\, \frac{B_{n-k}}{(n-k)!}x^{n-k}\\
+&amp;=F(x)e^x
+\end{aligned}
+</span></p>
+<p>now that <span class="math inline">F&#39;(x)=e^xF(x)</span> and <span class="math inline">F(0)=\frac{B_0}{0!}=1</span>, we can solve the ODE getting <span class="math inline">F(x)=\exp(e^x-1)</span></p>
+<h2 id="pigeonhole-principle">pigeonhole principle</h2>
+<blockquote>
+<p>Def: Cover of a set.<br />
+Given a set <span class="math inline">A</span>, a family <span class="math inline">\{A_1,A_2\ldots A_k\}</span> s.t. <span class="math inline">\forall i\ A_i\subseteq A,\ \bigcup_i A_i=A</span> is called a cover of <span class="math inline">A</span>.<br />
+(Unlike a <strong>partition</strong>, here, we do not require no-overlaping i.e. <span class="math inline">i\neq j\to A_i\cap A_j=0</span>)<br />
+There is at least a set <span class="math inline">A_k</span> s.t. $|A_k|</p>
+</blockquote>
+<p>PF: Suppose that <span class="math inline">\forall i\ |A_i| \leq \left\lceil\frac{|A|}{k}\right\rceil -1</span>.<br />
+Then <span class="math inline">\sum_i |A_i|\leq k\left(\left\lceil\dfrac{|A|}{k}\right\rceil -1\right)&lt;k\left(\frac{|A|}{k}+1-1\right)=|A|</span>.<br />
+However <span class="math inline">\bigcup_i A_i=A\implies \sum_i |A_i|\geq |\bigcup_i A_i|=|A|</span>.<br />
+We reached a contradictory conclusion, so the assumption that <span class="math inline">\forall i\ |A_i| &lt; \left\lceil\frac{|A|}{k}\right\rceil</span> is false.<br />
+Thus, there exists a set <span class="math inline">A_k</span> s.t. <span class="math inline">|A_k|\geq \left\lceil\frac{|A|}{k}\right\rceil</span></p>
+<h3 id="example">example</h3>
+<blockquote>
+<p>Let <span class="math inline">n</span> be an positive integer, and <span class="math inline">A\subseteq \{1,2,3\ldots 2n\}</span> such that <span class="math inline">|A|=n+1</span>.<br />
+Show that <span class="math inline">\exists x,y\in A\text{ s.t. }x\mid y</span></p>
+</blockquote>
+<p>Suppose that <span class="math inline">A=\{a_1,a_2\ldots a_m\}</span> where <span class="math inline">a_1&lt;a_2&lt;a_3\ldots a_m</span><br />
+Let <span class="math inline">f(p)=\max\{d: 2^d\mid p\},\ g(p)=2^{-f(p)} p</span>, and <span class="math inline">A_{k}=\{x\in A\mid g(x)=2k-1\}</span> for <span class="math inline">k=1,2,3\ldots n</span><br />
+Applying the pigeonhole principle, there is a <span class="math inline">A_k</span> such that <span class="math inline">|A_k|\geq 2</span>. Let <span class="math inline">x,y</span> be two distinct elements in <span class="math inline">A_k</span>,<br />
+<span class="math inline">x=2^{p_1}(2k-1),y=2^{p_2}(2k-1)</span> so we can expect to get either <span class="math inline">x\mid y</span> or <span class="math inline">y\mid x</span>.</p>
+<h3 id="example-1">example</h3>
+<blockquote>
+<p>There are 15 workstations <span class="math inline">W=\{w_1,w_2\ldots w_{15}\}</span> and 10 servers <span class="math inline">S=\{s_1,s_2\ldots s_{10}\}</span>.<br />
+A cable can connect a workstation to a server.</p>
+<p>Find a way to connect the workstations and servers denoted <span class="math inline">E</span>.<br />
+Let <span class="math inline">f:\rho(W)\to \rho(S)\quad f(W_0)\{s_i\mid \exists w_j\in W_0\land (w_j,s_i)\in E\}</span>.<br />
+That makes <span class="math inline">\forall W_0\subseteq W\ (|W_0|\geq 10\to F(W_0)=S)</span> a true statement.</p>
+</blockquote>
+<p>前面<span class="math inline">10</span>个work-station,连<span class="math inline">(w_i,s_i)</span>, 后面的<span class="math inline">5</span>个ws,和整个<span class="math inline">S</span>相连</p>
+<p><span class="math inline">F(\{1,2,3\ldots 10\})=S</span>,否则选道了后面<span class="math inline">5</span>个之一,那么也是全连接的.这是合法解,用了<span class="math inline">10+5\times 10=60</span> edges.</p>
+<p>最后证明其最优性,用了少于<span class="math inline">60</span>的方案<span class="math inline">G</span>,我们考虑这个<span class="math inline">G</span>对<span class="math inline">K_{15,10}</span>取补的结果(<span class="math inline">\forall (x,y)\ x\in W,y\in S</span>,有边和没边兑换).<br />
+这样得到的二分图,有至少<span class="math inline">150-60+1=91</span>个边, 按照 pigeonhole principle , 有一个server <span class="math inline">s_0</span>分到了<span class="math inline">\lceil 91/10 \rceil=10</span>条补图中的边, 即<span class="math inline">G</span>中,它和这<span class="math inline">10</span>个ws不相连, 那么我们选这<span class="math inline">10</span>个ws,与它们相连的server,就并非整个<span class="math inline">S</span>,而是至多<span class="math inline">S\backslash \{s_0\}</span></p>
+<h3 id="example-2">example</h3>
+<blockquote>
+<p>given any permutation of <span class="math inline">[n]</span> find the exact lower bound of <code>max(LIS, LDS)</code>.<br />
+找到一个<span class="math inline">k</span>,使得一个<span class="math inline">n</span>的排列<span class="math inline">p</span>. 满足<span class="math inline">p</span>中的最长上升子序列和最长下降子序列,这两个子序列中,有一个长度大于<span class="math inline">k</span>.</p>
+</blockquote>
+<p>LIS: longest increasing subsequence; LDS: longest decreasing subsequence.</p>
+<p>设求出的结果为<span class="math inline">k</span>.<br />
+假设<span class="math inline">\mathrm{LIS}(p)&lt;k</span>也就是<span class="math inline">\mathrm{LIS}(p)\leq k-1</span><br />
+由Dilworth theorem (最小链覆盖等于最长反链),<span class="math inline">p</span>可以被划分成不超过<span class="math inline">k-1</span>个decending subsequence.<br />
+于是由 pigeonhole principle ,这样的<span class="math inline">k-1</span>个子序列中,存在一个长度为至少<span class="math inline">\lceil n/(k-1) \rceil</span>,我们为了保证结论成立需要<span class="math inline">\lceil n/(k-1)\rceil \geq k</span>.<br />
+于是<span class="math inline">\left\lceil \frac{n}{k-1}\right\rceil \geq k \iff \frac{n}{k-1}&gt; k-1\iff k &lt;1+ \sqrt n</span></p>
+<p>这样,就成功求出了<span class="math inline">k</span>.</p>
+<h3 id="example-3">example</h3>
+<blockquote>
+<p>Let <span class="math inline">\{S_1,S_2,S_3,S_4\}</span> be a partition of <span class="math inline">\{1,2, \ldots 67\}</span>.<br />
+Show that one of <span class="math inline">S_1,S_2,S_3,S_4</span><br />
+must contain <span class="math inline">x,y,z</span> such that <span class="math inline">z=x−y</span></p>
+</blockquote>
+<p>{{TODO}}: proof</p>
+<h3 id="example-4">example</h3>
+<blockquote>
+<p>Show that for every integer <span class="math inline">n</span> there is a multiple of <span class="math inline">n</span> that has only 0 and 1 in its decimal representation.</p>
+</blockquote>
+<p>Suppose that such multiple does not exist, consider <span class="math inline">a_k=\frac{10^k-1}{9}={(\, \overbrace{11\ldots 1\, }^{k})}_{10}</span> for <span class="math inline">k=1,2,3\ldots n</span><br />
+Since <span class="math inline">a_k</span> contains only 1, they is no multiple of <span class="math inline">n</span> among them.<br />
+Let <span class="math inline">b_k=a_k\bmod n</span>, we should have <span class="math inline">b_k\neq 0</span>, so there is only <span class="math inline">n-1</span> possible value for <span class="math inline">b_k</span>.<br />
+Therefore <span class="math inline">\exists i,j\ a_i\equiv a_j\bmod n</span> so <span class="math inline">n\mid (a_i-a_j)</span> which contains only 0,1 in its decimal representation.<br />
+Hence, there should be a multiple of <span class="math inline">n</span> that consists of only 0 and 1.</p>
+<h2 id="lhrrlinear-homogeneous-recurrence-relation-the-generatingfunctionological-way">LHRR(linear homogeneous recurrence relation), the generatingfunctionological way</h2>
+<p>We can solve LHRRs by linear-ODE,OGF,EGF</p>
+<blockquote>
+<p>Def: <span class="math inline">k</span>-th degree LRR <span class="math inline">\forall n\!&gt;\!k\quad a_{n}=f(n)+\sum_{i=1}^k a_{n-i}c_i</span><br />
+And the homogeneous LRR <span class="math inline">\forall n\!&gt;\!k\quad a_{n}=\sum_{i=1}^k a_{n-i}c_i</span></p>
+</blockquote>
+<h3 id="using-ogf">using OGF</h3>
+<p><span class="math display">
+\begin{aligned}
+F(x)
+&amp;=\sum_{n=0}^\infty a_n x^n\\
+\left(\sum_{i=1}^k c_i x^i\right) F(x)
+&amp;=\sum_{n=0}^\infty x^n \sum_{i=1}^{\min(k,n)} c_i a_{n-i}\\
+&amp;=\sum_{n=1}^{k-1} x^n \sum_{i=1}^n c_i a_{n-i}+\sum_{n\geq k} a_n x^n\\
+&amp;=F(x) - \sum_{n=0}^{k-1} a_n x^n + \sum_{n=1}^{k-1} x^n \sum_{i=1}^n c_i a_{n-i}\\
+\left(1+\sum_{i=1}^k c_i x^i\right) F(x)
+&amp;=-a_0+\sum_{n=1}^{k-1}x^n\left(-a_n+\sum_{i=1}^n c_i a_{n-i}\right)\\
+\implies F(x)
+&amp;={\left(1+\sum_{i=1}^k c_i x^i\right)}^{-1}\left(-a_0+\sum_{n=1}^{k-1} x^n \left(-a_n+\sum_{i=1}^n c_i a_{n-i}\right)\right)
+\end{aligned}
+</span></p>
+<h3 id="using-egf">using EGF</h3>
+<p><span class="math display">
+\begin{aligned}
+G(x)
+&amp;=\sum_{n=0}^\infty a_n \frac{x^n}{n!}\\
+\sum_{i=0}^{k-1} c_{k-i}\frac{\mathrm{d}^i\, G(x)}{\mathrm{d}\, x^i}
+&amp;=\sum_{i=0}^{k-1} c_{k-i} \sum_{n=0}^\infty \frac{a_{n+i}}{n!}x^n\\
+&amp;=\sum_{n=0}^\infty \frac{x^n}{n!} \sum_{i=0}^{k-1} c_{k-i} a_{n+i}\\
+&amp;=\sum_{n=0}^\infty \frac{x^n}{n!} a_{n+k}\\
+&amp;=\frac{\mathrm{d}^k\, G(x)}{\mathrm{d}\, x^k}
+\end{aligned}
+</span></p>
+<p>To solve <span class="math inline">\sum_{i=0}^{k-1} c_{k-i} y^{(i)}=y^{k}</span>, consider <span class="math inline">\sum_{i=0}^{k-1} c_{k-i} \lambda^i=\lambda^k</span><br />
+We can find <span class="math inline">G(x)</span> in the solution space i.e. <span class="math inline">\mathrm{span}(e^{\lambda_1 x},e^{\lambda_2 x}\ldots e^{\lambda_k x} )</span><br />
+where <span class="math inline">\lambda_i</span> are the roots of the characteristic polynomial with multiplicity.</p>
+<p><span class="math display">
+\begin{aligned}
+&amp;e^{\lambda_i x}=\sum_{n=0}^\infty \frac{{\lambda_i}^n}{n!}x^n\to a_n={\lambda_i}^n\\
+&amp;\sum_{i=1}^k c_i e^{\lambda_i x} \to a_n=\sum_{i=1}^k c_i {\lambda_i}^n
+\end{aligned}
+</span></p>
+<h4 id="existence-of-unique-solution">existence of (unique) solution</h4>
+<ul>
+<li><span class="math inline">\lambda_i</span> are distinct</li>
+</ul>
+<p><span class="math display">
+\begin{bmatrix}
+{\lambda_1}^0 &amp; {\lambda_2}^0 &amp; {\lambda_3}^0 &amp; \cdots &amp; {\lambda_k}^0\\
+{\lambda_1}^1 &amp; {\lambda_2}^1 &amp; {\lambda_3}^1 &amp; \cdots &amp; {\lambda_k}^1\\
+{\lambda_1}^2 &amp; {\lambda_2}^2 &amp; {\lambda_3}^2 &amp; \cdots &amp; {\lambda_k}^2\\
+\vdots        &amp; \vdots        &amp; \vdots        &amp; \ddots &amp; \vdots\\
+{\lambda_1}^{k-1} &amp; {\lambda_2}^{k-1} &amp; {\lambda_3}^{k-1} &amp; \cdots &amp; {\lambda_k}^{k-1}\\
+\end{bmatrix}
+\begin{bmatrix} c_1\\ c_2\\ c_3\\ \vdots\\ c_k \end{bmatrix}
+=\begin{bmatrix} a_0\\ a_1\\ a_2\\ \vdots\\ a_{k-1} \end{bmatrix}
+</span></p>
+<p>The determinant of the coefficient matrix is (Vandermond) <span class="math inline">\prod_{i&lt;j}(\lambda_j-\lambda_i)\neq 0</span>, so it is invertible.</p>
+<ul>
+<li>root <span class="math inline">\lambda</span> with multiplicity <span class="math inline">c</span>.</li>
+</ul>
+<p><span class="math inline">x^0 e^{\lambda x}, x^1 e^{\lambda x}, x^2 e^{\lambda x}\ldots x^c e^{\lambda x}</span> are a set of linearly independent solution of the <span class="math inline">k</span>th order linear homogeneous ODE.</p>
+<p><span class="math inline">n^0 \lambda^n,\ n^1 \lambda^n,\ n^2 \lambda^n,\ \ldots n^{c-1} \lambda^n</span></p>
+<ul>
+<li><span class="math inline">z=a+bi</span> and <span class="math inline">\overline{z}=a-bi</span></li>
+</ul>
+<p><span class="math display">
+\begin{aligned}
+z^n+{\overline{z}}^n
+&amp;=\sum_{i=0}^n\binom{n}{i}
+    \left(
+        a^{n-i} {(bi)}^i + a^{n-i} {(-bi)}^i
+    \right)\\
+&amp;=2\sum_{2\mid n}\binom{n}{i}a^{n-i} b^i {(-1)}^{\frac{n}{2}}\\
+&amp; \implies z^n+{\overline{z}}^n \in \mathbb{Z}
+\end{aligned}
+</span></p>
+<p>nothing special.</p>
+<h2 id="deriving-striling-numbers-of-the-second-kind">deriving Striling numbers of the second kind</h2>
+<p><span class="math display">%\newcommand{\stl}[2]{\begin{Bmatrix}{#1} \\ {#2}\end{Bmatrix}}</span></p>
+<p>Let <span class="math inline">a_k=n!\stl{k}{n}</span>, where <span class="math inline">n</span> is fixed, be the count of ways - to colorize a sequence <span class="math inline">(a_1,a_2\ldots a_k)</span> whose length is <span class="math inline">k</span> - with exactly <span class="math inline">n</span> distinct color <span class="math inline">1,2,3\ldots n</span> s.t. each color is used at least once.</p>
+<p>If we have decided to use <span class="math inline">c_1\times 1,c_2\times 2\ldots c_n\times n</span>,<br />
+where <span class="math inline">\sum_{i=1}^n c_i=k\ \land \ \forall 1\leq i\leq n\ c_i &gt; 0</span><br />
+there are <span class="math inline">\frac{k!}{\prod_{i=1}^n c_i!}</span> ways to colorize the sequence.</p>
+<p><span class="math display">
+\begin{aligned}
+\sum_{k=0}^\infty a_k\frac{x^k}{k!}
+&amp;=\sum_{k=0}^\infty \frac{x^k}{k!}
+\sum_{\begin{subarray}{c}
+c_1+c_2\cdots c_n=k\\
+c_1,\, c_2\, \ldots c_n\geq 1
+\end{subarray}} 
+\frac{k!}{\prod_{i=1}^n c_i!}\\
+&amp;=\sum_{k=0}^\infty 
+\sum_{\begin{subarray}{c}
+c_1+c_2\cdots c_n=k\\
+c_1,\, c_2\, \ldots c_n\geq 1
+\end{subarray}} 
+\prod_{i=1}^n \frac{x^{c_i}}{c_i!}\\
+&amp;=\sum_{c_1,\, c_2\, \ldots c_n\geq 1}
+\prod_{i=1}^n \frac{x^{c_i}}{c_i!}\\
+&amp;={\left(
+\sum_{i=1}^\infty \frac{x^i}{i!}
+\right)}^n
+={\left( e^x-1 \right)}^n\\
+&amp;=\sum_{i=0}^n \binom{n}{i} {(-1)}^i e^{(n-i)x}\\
+&amp;=\sum_{i=0}^n \binom{n}{i} {(-1)}^i \sum_{k=0}^\infty {(n-i)}^k\frac{x^k}{k!}\\
+&amp;=\sum_{k=0}^\infty \frac{x^k}{k!}\sum_{i=0}^n \binom{n}{i} {(-1)}^i {(n-i)}^k\\
+&amp;=\sum_{k=0}^\infty \frac{x^k}{k!} \left(\stl{k}{n}n!\right)
+\end{aligned}
+</span></p>
+<p>Thus</p>
+<p><span class="math display">
+\stl{k}{n}
+=\frac{1}{n!}\sum_{i=0}^n \binom{n}{i} {(-1)}^i {(n-i)}^k
+=\sum_{i=0}^n \frac{ {(-1)}^i }{i!} \frac{ {(n-i)}^k }{ (n-i)! }
+</span></p>
+<h2 id="partial-fraction-decompositon">partial fraction decompositon</h2>
+<p>{{TODO}}: proof</p>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>BZOJ2839集合计数-容斥原理</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>题目在<a href="https://oi-archive.memset0.cn/problem/bzoj/2839">这里 BZOJ2839</a> 对于<span class="math inline">\{1,2,3\dots n\}</span>的所有子集(共<span class="math inline">2^n</span>个),选出其中一些<span class="math inline">T=\{A_1,A_2\dots A_m\}</span>使得<span class="math inline">|\cap_{i=1}^m A_i|=k</span>. 求满足这样约束的集合簇<span class="math inline">T</span>的数量.</p>
+<hr />
+<p>设<span class="math inline">g(S)</span>为选出的<span class="math inline">T=(A_1,A_2,A_3\dots A_m)</span>满足<span class="math inline">S\subseteq (\cap A_i)</span>的<span class="math inline">T</span>的计数,</p>
+<p>设<span class="math inline">f(S)</span>为选出的<span class="math inline">T=(A_1,A_2,A_3\dots A_m)</span>满足<span class="math inline">S=(\cap A_i)</span>的<span class="math inline">T</span>的计数.</p>
+<p>根据定义<span class="math inline">g(S)=\sum_{S\subseteq T}f(T)</span>,子集反演,得到<span class="math inline">f(S)=\sum_{S\subseteq T}(-1)^{|T|-|S|}g(T)</span>.</p>
+<p>计算<span class="math inline">g(S)</span>考虑<span class="math inline">T^\prime=(A_1,A_2\dots A_m)</span>,其中<span class="math inline">A_i\cap S=\phi</span>.则<span class="math inline">T=(A_1\cup S,A_2\cup S\dots A_m\cup S)</span>为一个对<span class="math inline">g(S)</span>有贡献<span class="math inline">1</span>的方案,<span class="math inline">T</span>与<span class="math inline">T^\prime</span>是一一对应的.</p>
+<p>考虑对<span class="math inline">T^\prime</span>计数.<span class="math inline">A_i\subseteq (all\backslash S)</span>,有<span class="math inline">2^{n-|S|}</span>个子集,随便选其中一些(不能选出<span class="math inline">T&#39;=\{\}</span>)那就是<span class="math inline">pow(2,2^{n-|S|})-1</span>.</p>
+<p>于是<span class="math inline">g(S)=pow(2,2^{n-|S|})-1</span>.我们发现这是个和<span class="math inline">|S|</span>有关,而和<span class="math inline">S</span>具体取值没有关系,于是我们设<span class="math inline">k=|S|,g(S)=G(|S|)=G(k)=pow(2,2^{n-k})-1</span>.此外再设<span class="math inline">f(S)=F(|S|)</span>.</p>
+<p>于是有<span class="math inline">F(k)=\sum_{i=k}^n\binom{n-k}{i-k}(-1)^{i-k}G(i)=\sum_{i=k}^n \binom{n-k}{i-k}(-1)^{i-k}(pow(2,2^{n-i})-1)</span>.</p>
+<p>然后答案就是<span class="math inline">\binom{n}{k}F(k)</span></p>
+<hr />
+<p>实现的时候有一个小问题,就是<span class="math inline">pow(2,2^{n-i})\equiv pow(2,2^{n-i}\bmod \varphi(p))\pmod p</span>,其中<span class="math inline">p</span>是一个质数,如果膜的不是质数(求解幂的时候不能保证底数和模数互质),按照扩展欧拉定理<span class="math inline">a^b\equiv \begin{cases}a^b&amp;(b&lt; \varphi(p))\\ a^{(b\bmod \varphi(p))+\varphi(p)}&amp;(b\ge \varphi(p))\end{cases}\pmod p</span>进行计算,复杂度不变.</p>
+<p>我写得复杂度多个<span class="math inline">O(\log p)</span>,考虑<span class="math inline">pow(2,2^k)=pow^2(2,2^{k-1})</span>递推求解它,就可以去掉这个求解幂所用的<span class="math inline">O(\log p)</span>.</p>
+<p>组合数的话,用到的<span class="math inline">\binom{n}{m}=\frac{n!}{m!(n-m)!}</span>都满足<span class="math inline">n,m&lt; p</span>,而且又有<span class="math inline">p</span>是质素,所以下面的逆元都是存在的,直接预处理阶乘算就行了…<span class="math inline">n,m\geq p</span>的话使用<span class="math inline">lucas</span>定理求解,同时复杂度多一个<span class="math inline">O(\log n)</span>,模数不是质数,是square free的好做,拆开分别lucas求解,CRT合并,不然的话需要些奇特技巧(OI里面似乎叫扩展lucas…).</p>
+<p>就瞎扯到这里吧,扔一个代码,窝写的复杂度是<span class="math inline">O(n\log p)</span>的.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> Int;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> Int mod=<span class="dv">1000000007</span><span class="bu">LL</span>;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Int fix(Int x){ <span class="cf">return</span> (x%mod+mod)%mod; }</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Int qpow(Int a,Int p=mod-<span class="dv">2</span>){</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    Int r=<span class="dv">1</span>; a=fix(a); <span class="cf">while</span>(p){</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(p&amp;<span class="dv">1</span>) r=r*a%mod;</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        a=a*a%mod; p&gt;&gt;=<span class="dv">1</span>;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">return</span> r;</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N=<span class="dv">1000000</span>+<span class="dv">10</span>;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>Int inv[N],fac[N],ifac[N],pw2[N];</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">inline</span> Int binom(<span class="dt">int</span> n,<span class="dt">int</span> m){</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(m&gt;n||m&lt;<span class="dv">0</span>) <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fac[n]*ifac[n-m]%mod*ifac[m]%mod;</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main(){</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    Int n,k; <span class="bu">std::</span>cin&gt;&gt;n&gt;&gt;k;</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    fac[<span class="dv">0</span>]=ifac[<span class="dv">0</span>]=fac[<span class="dv">1</span>]=ifac[<span class="dv">1</span>]=inv[<span class="dv">1</span>]=<span class="dv">1</span>;</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    pw2[<span class="dv">0</span>]=<span class="dv">1</span>; pw2[<span class="dv">1</span>]=<span class="dv">2</span>;</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">2</span>;i&lt;N;i++){</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        pw2[i]=pw2[i-<span class="dv">1</span>]*<span class="dv">2</span>%(mod-<span class="dv">1</span>);</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        inv[i]=fix(-(mod/i)*inv[mod%i]);</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        fac[i]=fac[i-<span class="dv">1</span>]*i%mod;</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        ifac[i]=ifac[i-<span class="dv">1</span>]*inv[i]%mod;</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    Int ans=<span class="dv">0</span>;</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=k;i&lt;=n;i++){</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        Int tmp=binom(n-k,i-k)*(qpow(<span class="dv">2</span>,pw2[n-i])-<span class="dv">1</span>)%mod;</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>((i-k)%<span class="dv">2</span>==<span class="dv">1</span>) ans=(ans-tmp+mod)%mod;</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> ans=(ans+tmp)%mod;</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout&lt;&lt;ans*binom(n,k)%mod&lt;&lt;<span class="bu">std::</span>endl;</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</body>
+</html>
