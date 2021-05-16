@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>数学分析2</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>[TOC]</p>
+<h2 id="ode-初步">ODE 初步</h2>
+<h3 id="ode入门解法">ODE入门解法</h3>
+<ul>
+<li>fisrt-order ODE
+<ul>
+<li>可分离变量: 一阶微分形式不变性,直接积分</li>
+<li>齐次方程: 换元<span class="math inline">u=\frac{y}{x},\mathrm{d}(y)=\mathrm{d}(ux)=u\mathrm{d}x+x\mathrm{d}u</span>之后可以分离变量</li>
+<li>一阶线性微分方程: (积分因子法:构造出可分离变量的微分方程;常数变易法:线性齐次方程的解构造出线性非齐次的方程的解)<br />
+<span class="math inline">y&#39;+p(x)y</span>类似乘法求导即<span class="math inline">(uy)&#39;=uy&#39;+u&#39;y</span>,给原方程乘上一个<span class="math inline">v</span>以构造<span class="math inline">(uy)&#39;</span>有<br />
+<span class="math inline">vy&#39;+vp(x)y=uy&#39;+u&#39;y</span>于是<span class="math inline">v=u,vp(x)=u&#39;=v&#39;</span>解出一个<span class="math inline">v</span>即可,比如<span class="math inline">v=e^{\int p(x)\mathrm{d}x}</span><br />
+得到<span class="math inline">\left(ye^{\int p(x)\mathrm{d}x}\right)&#39;=-q(x)e^{\int p(x)\mathrm{d}x}</span>.</li>
+</ul></li>
+<li>second-order linear ODE
+<ul>
+<li><span class="math inline">y&#39;&#39;+p(x)y&#39;+q(x)y=f(x)</span>,和对应的齐次(homogeneous)方程<span class="math inline">y&#39;&#39;+p(x)y&#39;+q(x)y=0</span></li>
+<li>解存在性条件,解唯一性条件,解空间结构: 引入Wronskian(朗斯基行列式).
+<ul>
+<li>the set of all solution of a <span class="math inline">n</span>-th order linear homogeneous ODE forms a <span class="math inline">n</span>-dimensional vector space.</li>
+<li>the set of all solution of a <span class="math inline">n</span>-th order linear ODE forms a affine spcae.</li>
+<li>if <span class="math inline">y_1,y_2,y_3\ldots y_n</span> is linearly dependent, then <span class="math display">W(x)=\begin{vmatrix}y_1^{(0)}&amp;y_2^{(0)}&amp;\ldots &amp;y_n^{(0)}\\ y_1^{(1)}&amp;y_2^{(1)}&amp;\ldots &amp;y_n^{(1)}\\ \vdots&amp;\vdots &amp;\ldots &amp;\vdots\\ y_1^{(n-1)}&amp;y_2^{(n-1)}&amp;\ldots &amp;y_n^{(n-1)}\\ \end{vmatrix}\equiv 0(x)</span></li>
+<li><strong>However</strong>, <span class="math inline">W(x)\equiv 0(x)</span> on interval <span class="math inline">I</span> doesn’t mean that <span class="math inline">y_1,y_2\ldots y_n</span> are linearly dependent.</li>
+</ul></li>
+<li>Liouville公式: <span class="math inline">y&#39;&#39;+p(x)y&#39;+q(x)y=0</span>两个解<span class="math inline">y_1(x),y_2(x)</span>的Wronskian有一定特殊性(一点为0,全局为0; 一点非0,全局非0)<br />
+<span class="math display">\begin{aligned} W(x)&amp;=y_1y_2&#39;-y_1&#39;y_2\\ W&#39;(x)&amp;=(y_1&#39;y_2&#39;+y_1y_2&#39;&#39;)-(y_1&#39;&#39;y_2+y_1&#39;y_2&#39;)=y_1y_2&#39;&#39;-y_1&#39;&#39;y_2\\ &amp;=-y_1\left(p(x)y_2&#39;+q(x)y_2\right)+(p(x)y_1&#39;+q(x)y_1)y_2\\ &amp;=-(y_1y_2&#39;-y_1&#39;y_2)p(x)+(-y_1y_2+y_1y_2)q(x)\\ &amp;=-W(x)\\ \implies &amp;W(x)=W(x_0)e^{\int_{x_0}^{x}-p(t)\mathrm{d}t} \end{aligned}</span></li>
+<li>求<span class="math inline">y&#39;&#39;+p(x)y&#39;+q(x)=f(x)</span>的解空间,<br />
+需要<span class="math inline">y&#39;&#39;+p(x)y&#39;+q(x)y=0</span>的解空间(由两个线性无关解<span class="math inline">y_1,y_2</span>张成)<br />
+和一个非齐次方程的特解.
+<ul>
+<li>常数变易法(求特解):
+<ol type="1">
+<li>线性齐次方程的解为<span class="math inline">C_1y_1+C_2y_2</span>.</li>
+<li>假设将常数用<span class="math inline">x</span>的函数替换可以得到线性非齐次方程的解 即<span class="math inline">y=C_1(x)y_1+C_2(x)y_2</span>为线性非齐次方程的解</li>
+<li>计算<span class="math inline">y&#39;,y&#39;&#39;</span>有<br />
+<span class="math inline">y&#39;=(C_1&#39;y_1+C_2&#39;y_2)+(C_1y_1&#39;+C_2y_2&#39;)</span><br />
+为了防止<span class="math inline">y&#39;&#39;</span>中出现<span class="math inline">C&#39;&#39;</span>(那样的话,我们会得到关于<span class="math inline">C</span>的二阶ODE,无法规约为更简单的情况),<br />
+我们假设<span class="math inline">C_1&#39;y_1+C_2&#39;y_2=0</span>于是<span class="math inline">y&#39;=C_1y_1&#39;+C_2y_2&#39;</span><br />
+<span class="math inline">y&#39;&#39;=C_1&#39;y_1&#39;+C_1y_1&#39;&#39;+C_2&#39;y_2&#39;+C_2y_2&#39;&#39;</span></li>
+<li>将上述导数带入原来的线性非齐次方程,利用<span class="math inline">y_1,y_2</span>为齐次方程的解,<br />
+即<span class="math inline">y_1&#39;&#39;+p(x)y_1&#39;+q(x)y_1=y_2&#39;&#39;+p(x)y_2&#39;+q(x)y_2=0</span>化简方程,<br />
+得到<span class="math inline">C_1&#39;y_1&#39;+C_2&#39;y_2&#39;=f(x)</span></li>
+<li>下式中<span class="math inline">x_0</span>为区间上任意一点.<br />
+<span class="math display">\begin{aligned} &amp;\begin{cases} C_1&#39;y_1+C_2&#39;y_2&amp;=0\\ C_1&#39;y_1&#39;+C_2&#39;y_2&#39;&amp;=f(x) \end{cases} \implies \begin{cases} C_1(x)=-&amp;\int_{x_0}^{x}\frac{y_2(t)f(t)}{W(t)}\mathrm{d}{t}\\ C_2(x)=&amp;\int_{x_0}^{x}\frac{y_1(t)f(t)}{W(t)}\mathrm{d}{t}\\ \end{cases}\\ &amp;\implies y(x)=\int_{x_0}^{x} \frac{y_1(t)y_2(x)-y_2(t)y_1(x)}{W(t)}f(t)\mathrm{d}t \end{aligned}</span></li>
+</ol></li>
+<li>已知线性齐次ODE的一个non-trival solution,构造出另一个与之线性无关的解:
+<ol type="1">
+<li>已知<span class="math inline">y_1&#39;&#39;+p(x)y_1&#39;+q(x)y_1=0</span>,求<span class="math inline">y_2</span>满足线性齐次ODE,且与<span class="math inline">y_1</span>线性无关.</li>
+<li>Wronskian的两种表达<br />
+<span class="math display">W(x)=W(x_0)e^{\int_{x_0}^x -p(t)\mathrm{d}t}={(y_1)}^2\ \frac{y_1y_2&#39;-y_2y_1&#39;}{{(y_1)}^2}={(y_1)}^2\left(\frac{y_2}{y_1}\right)&#39;</span> 线性齐次方程,解乘上一个常数仍然是解,所以我们可以丢弃<span class="math inline">W(x_0)</span>和<span class="math inline">\int_{x_0}^x -p(t)\mathrm{d}t</span>的积分下限.<br />
+<span class="math display">e^{\int -p(x)\mathrm{d}x}={(y_1)}^2\left(\frac{y_2}{y_1}\right)&#39; \qquad \left(\frac{y_2}{y_1}\right)&#39; = \frac{\exp\left(\int -p(x)\mathrm{d}x\right)}{{(y_1)}^2}</span><br />
+同样地,舍弃常数,得到任意一个满足上述方程的<span class="math inline">y_2</span>即可.</li>
+</ol></li>
+<li>求线性齐次ODE的解: 利用微分算子;观察形式待定系数;各种玄学.</li>
+</ul></li>
+</ul></li>
+<li>reduction
+<ul>
+<li>经典的降次
+<ul>
+<li>Bernoulli方程: <span class="math inline">y&#39;+p(x)y=q(x)y^n</span>, 除掉<span class="math inline">y^n</span>有<br />
+<span class="math inline">y^{-n}y&#39;+p(x)y^{n-1}=\left(y^{n-1}\right)&#39;+p(x)\left(y^{n-1}\right)=q(x)</span></li>
+<li><span class="math inline">F(x,y&#39;,y&#39;&#39;)=0</span>换<span class="math inline">u=y&#39;</span>有<span class="math inline">F(x,u,\frac{\mathrm d u}{\mathrm d x})=0</span></li>
+<li><span class="math inline">F(y,y&#39;,y&#39;&#39;)=0</span>换<span class="math inline">p=\frac{\mathrm dy}{\mathrm d x},\frac{\mathrm{d}^2 y}{\mathrm{d} x^2}=\frac{\mathrm d p}{\mathrm d x}=\frac{\mathrm d p}{\mathrm dy}\frac{\mathrm d y}{\mathrm dx}=p\frac{\mathrm d p}{\mathrm d y}</span>有<span class="math inline">F(y,p,p\frac{\mathrm d p}{\mathrm d y})</span></li>
+</ul></li>
+<li>其他方法…整体换元,三角换元,玄妙降阶.</li>
+</ul></li>
+</ul>
+<p>(Homogeneous equation with constant coefficients)<br />
+求常系数(有理数/实数/复数都可以)线性齐次ODE的解 <span class="math inline">y^{(n)}+\sum_{i=0}^{n-1} a_i y^{(i)}=0</span><br />
+特征方程法(求形如<span class="math inline">y=e^{\lambda x}</span>的解,寻找解空间的基),设<span class="math inline">y=e^{\lambda x}</span>有<span class="math inline">y^{(n)}=\lambda^n y</span>代入<br />
+<span class="math display">\lambda^n e^{\lambda x}+\sum_{i=0}^{n-1} \lambda^i a_i e^{\lambda x}=0\iff \lambda^n+\sum_{i=0}^{n-1} a_i \lambda^i =0</span><br />
+由代数学基本定理,该方程有<span class="math inline">n</span>个根,对应原方程的<span class="math inline">n</span>个解.<br />
+- 不相等的根对应的函数,显然线性无关. - (实系数情况)对于共轭根<span class="math inline">\lambda ,\overline{\lambda}</span>,线性组合可以得到两个<span class="math inline">\mathbb{R}\to\mathbb{R}</span>的函数<br />
+<span class="math display">\begin{aligned} &amp;e^{(a+bi)x}=e^a(\cos bx+i\sin bx)\quad e^{(a-bi)x}e^a(\cos bx-i\sin bx)\\ &amp;\frac{e^{(a+bi)x}+e^{(a-bi)x}}{2}=e^a\cos bx\quad \frac{e^{(a+bi)x}-e^{(a-bi)x}}{2i}=e^a\sin bx \end{aligned}</span> - 出现<span class="math inline">k</span>重根,有<span class="math inline">0=(\lambda-\lambda_0)^k P_{n-k}(\lambda )</span>形式的特征方程,<br />
+做常数变易,设<span class="math inline">C(x)e^{\lambda_0 x}</span>根,带入原方程,可以得到<br />
+<span class="math inline">e^{\lambda_0 x},\, xe^{\lambda_0 x},\ x^2e^{\lambda_0 x}\ldots x^{k-1}e^{\lambda_0 x}</span> 这样一组<span class="math inline">k</span>个线性无关的解. - 于是我们找的了<span class="math inline">n</span>个线性无关的解,它们的span就是原线性齐次ODE的解.</p>
+<p>更进一步地,配合使用常数变易法,可以解出任意的<span class="math inline">n</span>阶常系数线性非齐次ODE.</p>
+<blockquote>
+<p>reminder,对于整系数多项式方程,其有理数根的最简形式满足: 分子是常数项的约数而分母是最高次项的系数.<br />
+这对于求解高次常系数线性齐次ODE的特征方程很有帮助<br />
+Given that <span class="math inline">P(x)=\sum_{i=0}^n a_i x^i\in \mathbb{Z}[x]</span> and <span class="math inline">P(\frac{p}{q})=0\ \mathrm{gcd}(p,q)=1</span> we can show that <span class="math inline">p\mid a_0\land q\mid a_n</span></p>
+</blockquote>
+<p><span class="math display">
+\begin{aligned}
+&amp;P(\frac{p}{q})=0\land (p,q)=1\\
+\implies &amp; P(\frac{p}{q})\equiv \sum_{i=0}^n a_i p^i {(q^{-1})}^i\equiv a_0 \equiv 0 \pmod p\implies p\mid a_0\\
+&amp;q^n P(\frac{p}{q})\equiv \sum_{i=0}^n a_i p^i q^{n-i}\equiv a_n\equiv 0\pmod q\implies q\mid a_n
+\end{aligned}
+</span></p>
+<h2 id="多元函数微分学">多元函数微分学</h2>
+<h3 id="空间解析几何-曲面曲线-的-切法向">空间解析几何: 曲面/曲线 的 切/法向</h3>
+<p>空间解析几何中,我们用一般方程和参数方程表示曲面和曲线.<br />
+这里仅仅是辅助记忆和提供套路,不会关心严谨性.</p>
+<ul>
+<li><p>曲线有一个自由度, 是一个<span class="math inline">R\to R^n</span>的参数方程,<span class="math inline">\vec r(t)=[x_i(t)]</span>.<br />
+由定义,<span class="math inline">\vec r&#39;(t)=[x_i&#39;(t)]</span>为曲线在<span class="math inline">\vec r(t)</span>处的切向.</p></li>
+<li><p>曲面有<span class="math inline">n-1</span>个自由度, 是一个方程 <span class="math inline">F(\vec x)=0</span><br />
+考察<span class="math inline">F</span>确定的曲面上的任意曲线<span class="math inline">\vec r(t)=[r_i(t)]</span>,有<span class="math inline">F(\vec r(t))=0</span>,两边对<span class="math inline">t</span>求导,<br />
+<span class="math inline">0=\sum_{i=1}^n \frac{\partial F}{\partial x_i}(\vec r(t))\frac{\mathrm{d} r_i}{\mathrm{d} t}(t)=\nabla F(\vec r(t)) \cdot \vec r&#39;(t)</span><br />
+对于曲面上任意一点<span class="math inline">P</span>,考虑所有<span class="math inline">\vec r(t_0)=P</span>的曲线,有<span class="math inline">\nabla F\left(\overrightarrow{OP}\right) \cdot \vec r&#39;(t_0)=0</span><br />
+即<span class="math inline">\nabla F</span>为所有过该点的曲线的法向.<br />
+所以,对于一个满足<span class="math inline">F(\vec x_0)=0</span>的点<span class="math inline">x_0</span>(即曲面上一点),我们有<span class="math inline">\nabla F(\vec x_0)</span>是曲面在<span class="math inline">\vec x_0</span>的法向.</p></li>
+<li><p>多个曲面相交得到的曲线,<br />
+<span class="math inline">\begin{cases} F_1(x_1,x_2\ldots x_n)=0\\ F_2(x_1,x_2\ldots x_n)=0\\ \vdots\\ F_m(x_1,x_2\ldots x_n)=0\\ \end{cases}</span><br />
+对于一个满足上述方程组,即曲线上一点<span class="math inline">\vec x_0</span>,<br />
+有<span class="math inline">\mathop{span}(\nabla F_1(x_0),\nabla F_2(x_0)\ldots \nabla F_m(x_0))</span>为曲线法向.<br />
+而这个空间的orthogonal completement为曲线切向(在三维空间中,可以通过cross product计算).</p></li>
+<li><p>多个曲线张成的曲面,即参数曲面.<br />
+<span class="math inline">\begin{cases} x_1=x_1(t_1,t_2\ldots t_n)\\ x_2=x_2(t_1,t_2\ldots t_n)\\ \vdots\\ x_n=x_n(t_1,t_2\ldots t_n)\\ \end{cases}</span><br />
+对于一个参量<span class="math inline">t_k</span>,我们可以求<span class="math inline">{\left[\frac{\partial x_i}{\partial t_k}\right]}_{i}</span>是曲面的一个切向, 它们张成了曲面切面,<br />
+在三维空间中,可以由两个切向cross product求出法向.</p></li>
+</ul>
+<h3 id="jacobian-matrix">Jacobian matrix</h3>
+<blockquote>
+<p>对于<span class="math inline">F:R^n\to R^m</span>,或写为分量形式<span class="math inline">y_k=f_k(x_1,x_2\ldots x_n)</span><br />
+其Jacobi矩阵<span class="math inline">{\mathbf{J}}_{f}={\left[ \frac{\partial f_i}{\partial x_j} \right]}_{i,j}</span><br />
+可以看作一个<span class="math inline">\mathop{span}(\mathrm d x_1,\mathrm d x_2 \ldots x_n) \to \mathop{span}(\mathrm d y_1,\mathrm d y_2 \ldots \mathrm d y_m)</span>的linear mapping.<br />
+而Jacobi矩阵的乘法,就是多元函数复合的chain rule.</p>
+</blockquote>
+<p>已知一些函数的关系, 根据这些关系, 写出关于Jacobi矩阵的方程, 解方程,可以做不少有趣的结论.</p>
+<ul>
+<li>隐函数定理(描述隐函数存在的充分不必要条件,并给出隐函数的微分计算方式)</li>
+<li>反函数/逆映射定理(描述逆映射存在的必要不充分条件,并给出原函数和反函数的微分的关系)</li>
+</ul>
+<h3 id="taylor-of-multi-var">Taylor of multi-var</h3>
+<p>以二元函数为例,<span class="math inline">(x,y)\to (x+h,y+k)</span>假设偏导都是连续(推出可以换序)<br />
+令<span class="math inline">g(t)=f(x+th,y+tk)\quad t\in [0,1]</span>在<span class="math inline">0</span>处展开,求<span class="math inline">1</span>处的值(收敛性之类的先不做讨论,暂且只考虑形式)</p>
+<p><span class="math display">
+\begin{aligned}
+g(1)
+&amp;=f(x+h,y+k)\\
+&amp;=\sum_{k=0}^n \frac{g^{k}(0)}{k!}{(1-0)}^k + R_n\\
+&amp;=R_n+\sum_{k=0}^n \frac{1}{k!}\sum_{i=0}^k
+  \binom{k}{i}\frac{\partial^{k} f}{\partial x^{i}\partial y^{k-i}}(x+0h,y+0k)
+  {\left(\frac{\mathrm{d} (x+th)}{t}\right)}^{i}
+  {\left(\frac{\mathrm{d} (y+tk)}{t}\right)}^{k-i}\\
+&amp;=R_n+\sum_{k=0}^n \frac{1}{k!}\sum_{i=0}^k
+  \binom{k}{i}h^{i} k^{k-i}\frac{\partial^{k} f}{\partial x^{i}\partial y^{k-i}}(x,y)
+\end{aligned}
+</span></p>
+<p>其中余项 - Peaon: <span class="math inline">R_n=o({(1-0)}^n)=o(1)</span> 这个太弱,没有什么使用意义. - Lagrange: <span class="math inline">\exists \xi \in (0,1)\quad R_n=\frac{1}{(n+1)!}\sum_{i=0}^{n+1}\binom{n+1}{i}h^i k^{n+1-i} \frac{\partial^{n+1}f}{\partial x^{i}\partial y^{n+1-i}}(x+\xi h,y+\xi k)</span></p>
+<p>Lagrange余项比较有用,但是形式过于复杂,不易估计其大小,我们会尝试寻找类似一元函数中Peaon余项的<span class="math inline">o\left({\left(\sqrt{h^2+k^2}\right)}^n\right)</span></p>
+<p>令<span class="math inline">\displaystyle L=\max_{0\leq i\leq n+1}\left\{\frac{\partial^{n+1}f}{\partial x^{i}\partial y^{n+1-i}}(x+\xi h,y+\xi k)\right\}\quad u=|h|,v=|k|</span>我们估算Lagrange余项的大小.</p>
+<p><span class="math display">
+\begin{aligned}
+\left\vert R_n\right\vert 
+&amp;=
+\frac{1}{(n+1)!}\sum_{i=0}^{n+1}\binom{n+1}{i}h^i k^{n+1-i} \frac{\partial^{n+1}f}{\partial x^{i}\partial y^{n+1-i}}(x+\xi h,y+\xi k)\\
+&amp;\leqslant 
+\frac{L}{(n+1)!}\sum_{i=0}^{n+1}\binom{n+1}{i}u^i v^{n+1-i}\\
+&amp;=\frac{L}{(n+1)!}{(u+v)}^{n+1}\\
+\implies
+\frac{|R_n|}{{\left(\sqrt{h^2+k^2}\right)}^n}
+&amp;=\frac{L}{(n+1)!}(u+v) \cdot {\left(\frac{u+v}{\sqrt{h^2+k^2}}\right)}^n\\
+&amp;=\frac{L}{(n+1)!}(u+v) \cdot {\left(\frac{u+v}{\sqrt{u^2+v^2}}\right)}^n\\
+\end{aligned}
+</span></p>
+<p>做一下直角座标道极座标的变换,有<span class="math inline">r=\sqrt{u^2+v^2}\quad \exists \theta\in \left[0,\frac{\pi}{4}\right]\ u=r\sin \theta,v=r\cos\theta</span></p>
+<p><span class="math display">
+\begin{aligned}
+\frac{|R_n|}{{\left(\sqrt{h^2+k^2}\right)}^n}
+&amp;=\frac{Lr}{(n+1)!}(\cos\theta+\sin\theta) \cdot {\left(\frac{r(\cos\theta+\sin\theta)}{r}\right)}^n\\
+&amp;=\frac{Lr}{(n+1)!}(\cos\theta+\sin\theta) \cdot {(\cos\theta+\sin\theta)}^n\\
+&amp;=\frac{Lr}{(n+1)!}\sin^{n+1}(\theta+\frac{\pi}{4})\\
+&amp;\to 0\qquad (\text{when }r\to 0)
+\end{aligned}
+</span></p>
+<p>于是二元函数的Taylor展开中的Lagrange余项,类似一元中的情况,是<span class="math inline">O({\left[\sqrt{h^2+k^2}\right]}^n)</span>的,</p>
+<ul>
+<li>余项大小估计的结论可以类似地进行推广,得到<span class="math inline">R^d\to R</span>的函数的Taylor展开, 给出差异被<span class="math inline">{||\Delta \vec x||}^{n}</span>控制的估计.</li>
+<li>多元函数的taylor展开,也一样是有“唯一性”的, 即<span class="math inline">f</span>在<span class="math inline">\vec{x}_0</span>附近的一个<span class="math inline">n</span>次多项式近似, 如果差异是<span class="math inline">o({||\Delta \vec x||}^{n})</span>的, 那么这个多项式一定是<span class="math inline">f</span>在该点的<span class="math inline">n</span>阶泰勒多项式.</li>
+<li>多元函数也可以有Taylor series.</li>
+<li>这种形式,对其进行抽象,可以搞出多元形式幂级数.</li>
+</ul>
+<h2 id="多元函数积分学">多元函数积分学</h2>
+<blockquote>
+<ul>
+<li><p>找换元,<br />
+可以看被积函数的形式,尝试找可以化简它的参数方程,<br />
+也可以看积分区域</p></li>
+<li><p>画图 / 固定某个量求截面 大致了解积分区域的信息.</p></li>
+<li><p>对称性化简</p></li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>记得乘上Determinant of the Jacobian matrix, 把<span class="math inline">(x,y)</span>换为<span class="math inline">(u,v)</span>就乘上<span class="math inline">\mathrm{abs}\ \frac{\partial(x,y)}{\partial(u,v)}</span><br />
+可以写出explicit-form,然后求偏导计算行列式,也可以用逆映射定理,计算<span class="math inline">\frac{\partial(u,v)}{\partial(x,y)}</span>取倒数并置换变量.</li>
+</ul>
+</blockquote>
+<h3 id="区域并非关于原点中心对称的极座标球座标换元">区域并非关于原点中心对称的极座标/球座标换元</h3>
+<p><span class="math display">
+\int_{0}^{2}\int_{0}^{\sqrt{2x-x^2}}\sqrt{x^2+y^2}\mathrm{d}x\mathrm{d}y
+</span></p>
+<p>积分区域即<span class="math inline">0\leq x\leq 2\land 0\leq y\leq \sqrt{2x-x^2}</span>,化个图发现是以<span class="math inline">(1,0)</span>为圆心的圆盘在<span class="math inline">x</span>轴上半部分的区域.<br />
+改写为<span class="math inline">x^2+y^2 = 2x</span></p>
+<p>被积函数形式太差,极座标换元,确定参数范围.<br />
+<span class="math inline">x=r\cos \theta,y=r\sin\theta</span></p>
+<ul>
+<li>画图,在图形上面找,固定了<span class="math inline">\theta</span>后,作出一条原点开始的射线<br />
+<span class="math inline">r</span>最大取到交出来的弦的弦长.<br />
+弦的两端和圆心连接,得到一个底角为<span class="math inline">\theta</span>,腰长为<span class="math inline">r</span>的等腰三角形, 于是弦长为<span class="math inline">2r\cos \theta</span></li>
+<li>直接带入两个边界的方程, <span class="math inline">x^2+y^2=2x\implies r^2=2r\cos \theta</span>于是夹一下范围得到<span class="math inline">0\leq r\leq 2\cos\theta</span></li>
+</ul>
+<p><span class="math display">
+\int_{0}^{\pi/2}\theta
+\int_{0}^{2\cos\theta}
+r\cdot r\mathrm{d}r
+</span></p>
+<h2 id="曲线积分和曲面积分">曲线积分和曲面积分</h2>
+<blockquote>
+<p>奇怪的地方在于,<span class="math inline">\mathrm{d}x \mathrm{d}y</span>为何换元之后不能直接把全微分展开,而需要手动补上<span class="math inline">\frac{\partial (x,y)}{\partial (u,v)}</span>得到<span class="math inline">\frac{\partial (x,y)}{\partial (u,v)}\mathrm{d}u \mathrm{d}v</span><br />
+但是<span class="math inline">\mathrm{d}x\wedge \mathrm{d}y</span>直接带入<span class="math inline">\mathrm{d}x=x_u\mathrm{d}u+x_v\mathrm{d}v,\ \mathrm{d}y=y_u\mathrm{d}u+y_v\mathrm{d}v</span>进行外积运算即可自然出现<span class="math inline">\mathrm{d}x\wedge \mathrm{d}y=\frac{\partial (x,y)}{\partial (u,v)}\mathrm{d}u\wedge \mathrm{d}v</span></p>
+</blockquote>
+<h3 id="曲面积分曲线积分中的换元">曲面积分/曲线积分中的换元</h3>
+<blockquote>
+<p>这里仅仅是记录符号上的变换,用于辅助记忆,<br />
+并非正确且完整的推导或证明.</p>
+<p>引入了微分形式(differential form)以便推导更自然.</p>
+</blockquote>
+<p>以下推导的依据为. - 逆映射定理(描述逆映射的存在性和可微性)<br />
+<span class="math inline">\vec y=f(\vec x)</span>是可微且偏导连续的<br />
+在一点<span class="math inline">\vec{x}_0</span>出,若<span class="math inline">\begin{Vmatrix}J_f(x_0)\end{Vmatrix}\neq 0</span><br />
+令<span class="math inline">\vec y_0=f(\vec x_0)</span>则在<span class="math inline">\vec y_0</span>的某个邻域内,存在局部逆映射<span class="math inline">\vec y=g(\vec x)</span>,<br />
+并且<span class="math inline">J_y(y)J_x(x)=I</span>.其中<span class="math inline">I</span>为单位矩阵.<br />
+- 链式法则/一阶微分形式不变性 - <span class="math display">\vec y=F(\vec x)\implies \mathrm{d}y_1\wedge \mathrm{d}y_2\ldots \mathrm{d}y_n=\frac{\partial (y_1,y_2\ldots y_n)}{\partial (x_1,x_2\ldots x_n)}\mathrm{d}x_1\wedge \mathrm{d}x_2\ldots \mathrm{d}x_n</span></p>
+<p>还可以推广到<code>3-form,4-form ...</code>的积分,做法和结论是一致的.</p>
+<h4 id="mathbbr3中第一类曲线积分中的换元座标系变换"><span class="math inline">\mathbb{R}^3</span>中第一类曲线积分中的换元/座标系变换</h4>
+<p>已知<span class="math inline">\vec r(t)=\left(x(t),y(t),z(t)\right)</span>为正则曲线<span class="math inline">L</span>的参数化.<br />
+引入参数<span class="math inline">\theta</span>并<span class="math inline">t=\varphi(\theta)</span>, 设<span class="math inline">x(\varphi(\theta))=u(\theta), y(\varphi(\theta))=v(\theta), z(\varphi(\theta))=w(\theta)</span><br />
+和<span class="math inline">f(x(t),y(t),z(t))=g(t)=g(\varphi(\theta))=h(\theta)</span>,其中<span class="math inline">h=g\circ \varphi</span><br />
+则有</p>
+<p><span class="math display">
+\begin{aligned}
+\int_L f(\vec r)\mathrm ds
+&amp;=\int_a^b f(x,y,z)
+\left\vert \left\vert
+\overrightarrow{r&#39;}(t)
+\right\vert \right\vert
+  \mathrm{d}t \\
+&amp;=\int_a^b f(x(t),y(t),z(t))
+  \sqrt{
+     {\left(\frac{\mathrm dx}{\mathrm dt}\right)}^2
+    +{\left(\frac{\mathrm dy}{\mathrm dt}\right)}^2
+    +{\left(\frac{\mathrm dz}{\mathrm dt}\right)}^2
+  }
+  \mathrm{d}t \\
+&amp;=\int_{\alpha}^{\beta} f( x(\varphi(\theta)), y(\varphi(\theta)), z(\varphi(\theta)))
+  \sqrt{
+     {\left(\frac{\mathrm dx}{\mathrm dt}\right)}^2
+    +{\left(\frac{\mathrm dy}{\mathrm dt}\right)}^2
+    +{\left(\frac{\mathrm dz}{\mathrm dt}\right)}^2
+  }\varphi&#39;(\theta)\mathrm{d}\theta\\
+&amp;=\int_{\alpha}^{\beta} h(\theta)
+  \sqrt{
+    {\left(x&#39;(t)\varphi&#39;(\theta)\right)}^2
+    +{\left(y&#39;(t)\varphi&#39;(\theta)\right)}^2
+    +{\left(z&#39;(t)\varphi&#39;(\theta)\right)}^2
+  }\mathrm{d}\theta\\
+&amp;=\int_{\alpha}^{\beta} h(\theta)
+  \sqrt{
+    {\left( u&#39;(\theta) \right)}^2
+    +{\left( v&#39;(\theta) \right)}^2
+    +{\left( w&#39;(\theta) \right)}^2
+  }\mathrm{d}\theta\\
+\end{aligned}
+</span></p>
+<p>可以看到,如我们所预期的那样,<br />
+对被积函数重新参数化,对方程重新参数化,之后一切自然.<br />
+说明第一类曲线积分的结果与选取的参数化方式无关.</p>
+<h4 id="mathbbr3中第一类曲面积分中的换元座标系变换"><span class="math inline">\mathbb{R}^3</span>中第一类曲面积分中的换元/座标系变换</h4>
+<p>已知一个(简单+正则)曲面<span class="math inline">S</span>的一种表示<br />
+<span class="math inline">\vec r(u,v)={\left(x(u,v),y(u,v),z(u,v)\right)}^{T}</span>其中<span class="math inline">(u,v)</span>取遍<span class="math inline">D</span>, <span class="math inline">D</span>为一<span class="math inline">{\mathbb{R}}^2</span>的子集.<br />
+和定义在其上的函数<span class="math inline">f(\vec r)=f(x,y,z)</span>.</p>
+<p>则有第一类曲面积分 <span class="math display">
+\begin{aligned}
+\iint_{\vec r\in S}f(\vec r)\mathrm{d}S
+&amp;=\iint_{(u,v)\in D} f(x(u,v),y(u,v),z(u,v))
+  \left\vert \left\vert
+  \overrightarrow{r_u} \times \overrightarrow{r_v}
+  \right\vert \right\vert\mathrm{d}u\mathrm{d}v\\
+&amp;=\iint_{D}f(x,y,z)
+  \left\vert \left\vert
+  \overrightarrow{r_u} \times \overrightarrow{r_v}
+  \right\vert \right\vert
+  \mathrm{d}u\mathrm{d}v\\
+\end{aligned}
+</span></p>
+<p>进行变换<span class="math inline">u=u(p,q),v=v(p,q)</span>引入新的参数<span class="math inline">p,q</span>,其中<span class="math inline">(p,q)\in \Delta</span><br />
+并且设<span class="math inline">\vec d(p,q)=\vec r(u(p,q),v(p,q))</span>,<br />
+考察面积元 <span class="math inline">\mathrm{d}S=\left\vert \left\vert \overrightarrow{r_u}\times \overrightarrow{r_v} \right\vert \right\vert \mathrm{d}u \mathrm{d}v</span> 的变化,有.</p>
+<p><span class="math display">
+\begin{aligned}
+\overrightarrow{r_u}
+&amp;=\dfrac{\partial \vec r(u,v)}{\partial u}
+=\dfrac{\partial \vec d(p,q)}{\partial u}\\
+&amp;=\dfrac{\partial \vec d(p,q)}{\partial p}\frac{\partial p}{\partial u}
+ +\dfrac{\partial \vec d(p,q)}{\partial q}\frac{\partial q}{\partial u}
+\\
+\overrightarrow{r_v}
+&amp;=\dfrac{\partial \vec d(p,q)}{\partial p}\frac{\partial p}{\partial v}
+ +\dfrac{\partial \vec d(p,q)}{\partial q}\frac{\partial q}{\partial v}
+\\
+\mathrm{d}S
+&amp;=\left\vert \left\vert
+  \overrightarrow{r_u}
+  \times
+  \overrightarrow{r_v}
+  \right\vert \right\vert
+  \mathrm{d}u\mathrm{d}v\\
+&amp;=\left\vert \left\vert
+    (\vec d_p p_u+ \vec d_q q_u)
+    \times
+    (\vec d_p p_v+ \vec d_q q_v)
+  \right\vert \right\vert
+  \frac{\partial (u,v)}{\partial (p,q)}
+  \mathrm{d}p\mathrm{d}q\\
+&amp;=\left\vert \left\vert
+   p_u q_v \vec d_p\times \vec d_q
+  +q_u p_v \vec d_q\times \vec d_p
+  \right\vert \right\vert
+  \frac{\partial (u,v)}{\partial (p,q)}
+  \mathrm{d}p\mathrm{d}q\\
+&amp;=\left\vert \left\vert
+   \vec d_p\times \vec d_q
+  \right\vert \right\vert
+  (p_u q_v-q_u p_v)
+  \frac{\partial (u,v)}{\partial (p,q)}
+  \mathrm{d}p\mathrm{d}q\\
+&amp;=\left\vert \left\vert
+   \vec d_p\times \vec d_q
+  \right\vert \right\vert
+  \frac{\partial (p,q)}{\partial (u,v)}
+  \frac{\partial (u,v)}{\partial (p,q)}
+  \mathrm{d}p\mathrm{d}q\\
+&amp;=\left\vert \left\vert
+   \vec d_p\times \vec d_q
+  \right\vert \right\vert
+  \mathrm{d}p\mathrm{d}q\\
+\end{aligned}
+</span></p>
+<p>于是返回曲面积分,</p>
+<p><span class="math display">
+\begin{aligned}
+\iint_S f(\vec r)\mathrm{d}S
+&amp;=
+\iint_D f(\vec r(u,v))
+\left\vert \left\vert
+\overrightarrow{r_u}\times \overrightarrow{r_v}
+\right\vert \right\vert
+\mathrm{d}u \mathrm{d}v\\
+&amp;=\iint_{\Delta}f(\vec d(p,q))
+\left\vert \left\vert
+\overrightarrow{d_u}\times \overrightarrow{d_v}
+\right\vert \right\vert
+\mathrm{d}p \mathrm{d}q\\
+\end{aligned}
+</span></p>
+<p>如预期的那样,第一类曲面积分和参数选取是无关的.</p>
+<h2 id="fourier分析">Fourier分析</h2>
+<h2 id="广义积分和参变量的积分">广义积分和参变量的积分</h2>
+<h2 id="misc">MISC</h2>
+<h3 id="cantors-intersection-theorem">Cantor’s intersection theorem</h3>
+<blockquote>
+<p>Given a sequence of compact,non-empty,cloesd set <span class="math inline">S_0\supset S_1\supset S_2\ldots \text{ s.t. } \lim_{n\to \infty} \mathrm{diam}(S_n)=0</span><br />
+&gt; <span class="math display">\renewcommand{\vec}[1]{\overrightarrow{#1}}\mathrm{diam}(S)=\sup_{\vec{x_0},\vec{x_1}\in S} ||\vec{x_0}-\vec{x_1}||</span> Show that <span class="math inline">\cap_{n=0}^{\infty} S_n=\{x\}</span></p>
+</blockquote>
+<p>Let <span class="math inline">T_k=S_{k+1}\setminus S_k\text{ and }T=\{T_0,T_1\ldots\}</span>.<br />
+By axiom-of-choice, we can select a series <span class="math inline">a_n=\{a_0,a_1\ldots\}\text{ s.t. }\forall n\ a_n\in T_n,a_n\in S_{k+1}</span><br />
+We can see that <span class="math inline">i\neq j\implies T_i\cap T_j=\emptyset</span>. Thus <span class="math inline">a_i\neq a_j</span></p>
+<p>Consider the convergency of <span class="math inline">\{a_n\}</span>.</p>
+<p>Since <span class="math inline">\mathrm{diam}(S_n)\to 0</span>, <span class="math inline">\forall \epsilon&gt;0\ \exists N\text{ s.t. }\forall n&gt;N\ \mathrm{diam}(S_n)&lt;\epsilon</span><br />
+<span class="math inline">\forall n&gt;m&gt;N\quad ||a_n-a_m||\leq \mathrm{diam}(S_{m+1})&lt;\epsilon</span>.<br />
+By Cauchy’s theorem, the series converges. Let <span class="math inline">x=\lim_{n\to \infty} a_i</span></p>
+<p><span class="math inline">\forall m,\text{let }b=\{a_m,a_{m+1},a_{m+2}\ldots \}\to x</span> and <span class="math inline">\forall i\geq m\  a_i\in S_m</span>. Since <span class="math inline">S_m</span> is a cloesd set and there is no duplicate elements in <span class="math inline">b</span>, the limit <span class="math inline">x</span> is in <span class="math inline">S_m</span>.<br />
+Therefor <span class="math inline">\forall m\ x\in S_m</span>, which is exactly <span class="math inline">x\in \cap_{n=0}^{\infty} S_n</span>.</p>
+<p>Finally, we can prove that <span class="math inline">x</span> is the unique element in <span class="math inline">\cap_{n=0}^{\infty} S_n</span> by using <span class="math inline">\mathrm{diam}(S_n)\to 0</span> again.</p>
+<blockquote>
+<p>要点 - A.C. - 选点避免重复. 闭集对于这种不重复的序列,取极限后,极限仍然在该闭集中.</p>
+</blockquote>
+<h3 id="连续映射一定将闭集映射到闭集吗">连续映射一定将闭集映射到闭集吗?</h3>
+<p><span class="math inline">S=\{(\frac{1}{n},n)\mid n\in \mathbb{N}^+\}</span>,和<span class="math inline">f(x,y)=x</span>.</p>
+<ul>
+<li>考察<span class="math inline">T=\overline{S}</span>,显然有<span class="math inline">\partial T\cap T=0</span>即<span class="math inline">T</span>开,故<span class="math inline">S</span>闭.<br />
+</li>
+<li>考虑<span class="math inline">f</span>,这是个连续映射</li>
+</ul>
+<p>但是<span class="math inline">f(S)=\{\frac{1}{n}\mid n\in\mathbb{N}^+\}</span>它有一个聚点<span class="math inline">0</span>是其本身的元素.<br />
+这并非一个闭集.</p>
+<p>但可以强化条件: 有界开集在连续映射下一定得到闭集.</p>
+<h3 id="张江理工-数学分析2-spring2021-midterm-某个题">张江理工-数学分析2-Spring2021-midterm 某个题</h3>
+<blockquote>
+<p>定义在<span class="math inline">D=\{(x,y)\in \mathbb{R}^2 \mid x^2+y^2\leq 4\}</span>上的可微函数<span class="math inline">z=f(x,y)</span>,<br />
+满足<span class="math inline">\forall (x,y)\in D\ |f(x,y)|\leq 1</span>,求证, 存在一个<span class="math inline">D</span>的内点<span class="math inline">(x_0,y_0)</span>使得<br />
+<span class="math display">{\left(\frac{\partial z}{\partial x}(x_0,y_0)\right)}^2+{\left( \frac{\partial z}{\partial y}(x_0,y_0) \right)}^2 &lt; 1</span></p>
+</blockquote>
+<p>先考虑正向,可以用的操作有中值定理,一致连续等..但都不好做. 考虑反证法.</p>
+<p>这个<span class="math inline">f_x^2+f_y^2</span>是<span class="math inline">\nabla (f_x,f_y)</span>的模的平方.<br />
+假设<span class="math inline">\forall x_0\in D^0\ ||\nabla f(x_0)||\geq 1</span>, 看到这种东西,应该是要做梯度下降.</p>
+<p>找一条跟着梯度方向走的连续曲线<span class="math inline">L</span>, 两端的函数值之差就是<span class="math inline">\int_L ||\nabla f(\vec x)|| ds\geq |L|\cdot 1</span><br />
+从某个地方开始跟着梯度走,“需要走多远到才能到达边界上”是不确定的,<br />
+从一个点<span class="math inline">P(x_s,y_s)</span>开始走,我们最长可以走的长度并非<span class="math inline">+\infty</span>,因为<span class="math inline">f(x)</span>是有界的,用函数值改变量最大值进行估计那么最长可以走<span class="math inline">2</span>. 而最短可以走的路径长度显然就是沿着<span class="math inline">\overrightarrow{OP}</span>方向走,长度是<span class="math inline">2-||\overrightarrow{OP}||</span>.</p>
+<p>所以应该选从原点出发,这样我们最短也可以走<span class="math inline">2</span>长度,而最长也可以走<span class="math inline">2</span>长度,所以我们一定会沿着某条半径直接走到边界上面.<br />
+并且两端函数值分别为<span class="math inline">-1,+1</span>. 于是原点处是个最值点, 而这点有是可微的,于是<span class="math inline">\mathrm d f(0,0)=0\mathrm{d} x+0\mathrm{d} y</span><br />
+我们又有关系<span class="math inline">\mathrm{d} f(0,0)=\nabla f(0,0) \cdot {(\frac{\partial f}{\partial x},\frac{\partial f}{\partial y})}^T</span><br />
+于是得到<span class="math inline">\nabla f(0,0)=(0,0)</span>这和<span class="math inline">||\nabla f(0,0)||\geq 1</span>矛盾.</p>
+</body>
+</html>

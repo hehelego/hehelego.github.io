@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>网络流问题</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="一些可以转化为网络流形式的线性规划问题">一些可以转化为网络流形式的线性规划问题</h2>
+<p><strong><em>如果您发现本文有任何错误或者有歧义的地方请联系我,我会核实后进行修正,我很在意我写出的文本的质量</em></strong></p>
+<blockquote>
+<p>这是一篇笔记文,记录一些OI/ICPC/CCPC中的网络流题目,<br />
+主要是帮助自己熟悉一下知识和技术:</p>
+<ul>
+<li>最大流/最小割/最小费用最大流/特殊问题(二分图上的 最大独立集,最小点覆盖,最大匹配) 等图论相关的最优化问题的线性规划形式的特点</li>
+<li>哪些形式的线性规划可以转化为上述形式</li>
+<li>上述过程中的常见模型与操作技巧</li>
+</ul>
+</blockquote>
+<p><span class="math inline">\pagebreak</span></p>
+<h3 id="关于线性规划">关于线性规划</h3>
+<p><span class="math inline">\pagebreak</span></p>
+<h3 id="一些图论最优化问题的线性规划形式">一些图论最优化问题的线性规划形式</h3>
+<p><span class="math inline">\pagebreak</span></p>
+<h3 id="例题usaco-diningbzoj1711">例题:USACO dining(BZOJ1711)</h3>
+<h3 id="例题noi2008-志愿者招募">例题:NOI2008 志愿者招募</h3>
+<h3 id="例题bzoj1458-士兵占领.">例题:BZOJ1458 士兵占领.</h3>
+<blockquote>
+<p>BZOJ已经不复存在了,但是你可以在OI-archive上面找到这个题目.</p>
+<p>给一个<span class="math inline">n\times m</span>的矩阵<span class="math inline">0/1</span>矩阵,要求一些<span class="math inline">k</span>个元素<span class="math inline">(x_i,y_i)</span>是<span class="math inline">0</span>,<br />
+约束: <span class="math inline">(\forall i,\sum_j a_{i,j} \geq r_i) \land (\forall i,\sum_j a_{j,i} \geq c_i)</span>.<br />
+最小化<span class="math inline">\sum_i\sum_j a_{i,j}</span></p>
+</blockquote>
+<h4 id="传统做法">传统做法</h4>
+<p>考虑一个极端情况,放满<span class="math inline">nm-k</span>个<span class="math inline">1</span>,如果某一行或者某一列上面的<span class="math inline">1</span>数量仍然不够,那么就是无解,否则有解.</p>
+<p>考虑在此基础上,去掉尽量多的<span class="math inline">1</span>仍然满足约束.<br />
+令<span class="math inline">R_i/C_i</span>为第<span class="math inline">i</span>行/列上,可以为<span class="math inline">1</span>的元素数量减去<span class="math inline">r_i/c_i</span>即最大可改进数量.<br />
+此时如果想要对<span class="math inline">(x,y)</span>进行<span class="math inline">0\to 1</span>那么需要<span class="math inline">R_x&gt;0\land C_y&gt;0</span>,<br />
+进行改进操作之后,令<span class="math inline">R_x\prime\leftarrow R_x-1,C_y\prime\leftarrow C_y-1</span>,就可以继续进行上述改进操作.</p>
+<p>我们发现这非常类似二分图多重匹配.</p>
+<p>建立<span class="math inline">n+m</span>个点,分别表示每一行/列,<br />
+以及<span class="math inline">S\to row(i)</span>的边,容量为<span class="math inline">R_i</span> ; <span class="math inline">col(i)\to T</span>的边,容量为<span class="math inline">C_i</span>,<br />
+对于所有可以<span class="math inline">0\to 1</span>的<span class="math inline">(x,y)</span>连一条<span class="math inline">row(x)\to col(y)</span>的边,容量为<span class="math inline">1</span>.<br />
+那么<span class="math inline">S\to T</span>的最大流,就是这个二分图(当然要去掉<span class="math inline">S,T</span>,以及相关的边)的最大多重匹配,就是最大的可改进元素数量.</p>
+<h4 id="更少使用组合意义的推导">更少使用组合意义的推导</h4>
+<blockquote>
+<p>可以发现上面的推导,用到了不少组合意义与直觉,以及模型.<br />
+这些东西在复杂问题上是不怎么可靠的,所以下面我们将会给出一个少使用组合意义,少使用直观理解的推导.</p>
+</blockquote>
+<p><span class="math display">
+\begin{aligned}
+&amp;\begin{cases}
+    \forall (x,y), 0\leq a_{x,y} \leq 1\\
+    \newline\\
+    \forall 1\leq i\leq k,a_{x_i,y_i}=0\\
+    \newline\\
+    \forall 1\leq i\leq n,\sum_{j=1}^m a_{i,j}\geq r_i\\
+    \forall 1\leq i\leq m,\sum_{j=1}^n a_{j,i}\geq c_i\\
+\end{cases}
+\newline
+&amp;\min(\sum_{i=1}^n \sum_{j=1}^m a_{i,j})
+\end{aligned}
+</span></p>
+<h2 id="reference">reference</h2>
+<ul>
+<li><a href="about:blank">lca’s slides</a></li>
+<li><a href="about:blank">2016年信息学奥林匹克中国国家队候选队员论文集: 姜志豪(faebdc)-网络流的一些建模方法</a></li>
+</ul>
+</body>
+</html>

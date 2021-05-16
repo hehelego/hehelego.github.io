@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>noi2019你的名字</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="noi2019-你的名字">NOI2019 你的名字</h2>
+<h3 id="statement">statement</h3>
+<p>给你一个串<span class="math inline">S</span>,多次查询. <span class="math inline">Q(T,l,r)</span>表示,不在<span class="math inline">S[l,r]</span>中出现的<span class="math inline">T</span>中本质不同子串数量. 测试数据范围<span class="math inline">|S|,\max |T|\leq 5e5,\sum |T|\leq 1e6</span>.</p>
+<p>很像是NOI2018你的名字?没错就是因为我读错题了所以有了这个…</p>
+<h3 id="solution">solution</h3>
+<p>首先构造<span class="math inline">SAM(S)</span>. 对于<span class="math inline">Q(T,l,r)</span>首先构造<span class="math inline">SAM(T)</span>.</p>
+<blockquote>
+<p>套用求某个字符串<span class="math inline">S</span>的本质不同子串的做法(在线),我们考虑<span class="math inline">S[1..i]</span>的后缀,使得它不在<span class="math inline">S[1..i-1]</span>出现. 对于一个<span class="math inline">k</span>,<span class="math inline">right(S[i..k])</span>在<span class="math inline">i</span>减小时不变或者扩大的.所以存在一个<span class="math inline">L_i</span>使得长度大于等于<span class="math inline">L_i</span>的<span class="math inline">suf(S[1..i])</span>都是在<span class="math inline">S[1..i-1]</span>里面没有出现的.</p>
+<p>这个<span class="math inline">L_i</span>就是<span class="math inline">len(par(\ tr(q_s,S[1..i])\ ))+1</span>. (当然还有另一种trivial的做法,把<span class="math inline">SAM(S)</span>的状态<span class="math inline">Q</span>,和<span class="math inline">tr</span>作为一个图的点和边,有<span class="math inline">S</span>的本质不同子串与<span class="math inline">q_s</span>起始的路径一一对应.这是个DAG上(显然无环啊,不然S就存在一个长度无穷大的子串了…)路径计数.)</p>
+</blockquote>
+<p>还是枚举<span class="math inline">T</span>的前缀,考虑这个前缀的suffix有多少可以统计.对于没有在<span class="math inline">T[1..i-1]</span>出现,和上面一样. 这里如果长度<span class="math inline">k</span>的suffix在<span class="math inline">S[l..r]</span>出现那么更小长度也出现. 于是我们尝试找一个<span class="math inline">L_i</span>使得长度大于它的suffix都没在S[l..r]$出现.</p>
+<p>这里也是个经典问题,我们要维护<span class="math inline">T[1..i]</span>和<span class="math inline">S[l..r]</span>的最长匹配后缀,我们在<span class="math inline">SAM(S)</span>的parent tree上面用可持久化线段树合并求出每个状态的right集合,用可持久化线段树就可以判断right是不是和[l,r]相交了. 假设现在匹配长度是<span class="math inline">L</span>,落在<span class="math inline">SAM(S)</span>的状态<span class="math inline">q</span>.加入<span class="math inline">T[i]</span>时.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> c=T[i];</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(<span class="fu">tr</span>(q,c)==NULL&amp;&amp;q!=qs){</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    q=par(q);</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    L=len(q);</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">tr</span>(q,c)!=NULL){</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    q=<span class="fu">tr</span>(q,c); L++;</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span>(q!=qs&amp;&amp;intersect(right(q),[l+L,r])==<span class="kw">false</span>){</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        L--;</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(L&lt;=len(parent(q))) q=parent(q);</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>首先尝试走一个<span class="math inline">c=T[i]</span>的trans,这样再缩短<span class="math inline">L</span>对应的就一定是<span class="math inline">suf(T[1..i])</span>了. 之后就是要让这个suffix出现在<span class="math inline">S[l..r]</span>中了.对于匹配到<span class="math inline">(q,L)</span>,如果<span class="math inline">[l+L-1,r]\cap right(q)\neq \phi</span>那就是出现了. 需要注意以下这个<span class="math inline">l+L-1</span>,考虑下<span class="math inline">L=3</span>,而<span class="math inline">L+1\in right</span>的情况,显然不足以说明它是<span class="math inline">S[l..r]</span>的子串.</p>
+<p>这里就有两种办法来扩大交集了,减小<span class="math inline">L</span>,或者增大<span class="math inline">right(q)</span>.后者就是跳到parent了. 当然,减小<span class="math inline">L</span>到一定程度的时候,就不能在处于<span class="math inline">q</span>了,因为<span class="math inline">SAM</span>上面对于<span class="math inline">q</span>而言,<span class="math inline">qs\to q</span>的路径长度恰好覆盖<span class="math inline">[1+len(parent(q)),len(q)]</span>.所以<span class="math inline">L</span>小于<span class="math inline">1+len(par)</span>的时候,这个串的<span class="math inline">right</span>应该是<span class="math inline">right(parent(q))</span>. 所以我们减小<span class="math inline">L</span>,并在失效时跳parent就行了…直接跳parent的操作已经被包含在其中了.</p>
+<p>这样<span class="math inline">L</span>就是最长的,使得<span class="math inline">T[1..i]</span>的suffix出现在<span class="math inline">S[l..r]</span>的长度了,给它加一就行了.</p>
+<p>这样两部分约束取max就是<span class="math inline">L_i</span>了,于是长度为<span class="math inline">[L_i,i]</span>的suffix都可以统计.</p>
+<h3 id="code">code</h3>
+<p><a href="https://loj.ac/submission/794673">link:loj sol1</a> <a href="https://loj.ac/submission/422810">link:loj sol2</a></p>
+<h3 id="another-solution">another solution</h3>
+<p>其实是一样的,就是写的风格不同. 这次我们从 求本质不同子串的离线做法 推导出来.</p>
+<blockquote>
+<p>我们求<span class="math inline">S</span>的本质不同子串,构造<span class="math inline">SAM(S)</span>. 因为两个子串不相等,则它们在SAM的trans图上面对应的<span class="math inline">qs</span>起始的路径不重合. SAM上面<span class="math inline">qs\to q</span>的路径,长度恰好覆盖了<span class="math inline">[len(parent)+1,len]</span>. 答案为<span class="math inline">\sum_{q\in Q}len(q)-len(parent(q))</span></p>
+</blockquote>
+<p>这次我们考虑不同的状态来求和.即对于状态<span class="math inline">q_i</span>我们找一个<span class="math inline">L</span>使得长度在<span class="math inline">[L,len(q_i)]</span>之间的都是有贡献的. 这个L首先肯定不小于<span class="math inline">len(parent)+1</span>.然后呢? 它取决于<span class="math inline">right(q_i)</span>.比如这里<span class="math inline">r\in right(q_i)</span>,那么它就是尽量小的<span class="math inline">k</span>使得<span class="math inline">T[r-k+1,r]</span>没有出现在<span class="math inline">S[l..r]</span>中,这个东西只和<span class="math inline">r</span>有关,于是我们对于<span class="math inline">1,2,3\dots |T|</span>分别求出这个<span class="math inline">k</span>.怎么求?和上面一样,记录这个答案为<span class="math inline">lim_r=k</span>,那么可以取的长度就在<span class="math inline">[max(len(par)+1,lim_r),len(q)]</span>. 最后答案就是<span class="math inline">\sum_{q\in Q}\max(0,len(q)-\max(len(parent),lim_r))</span>.</p>
+<blockquote>
+<p>补充一句,状态<span class="math inline">q</span>代表的子串,或者说,<span class="math inline">tr(q_s,T)=q</span>的<span class="math inline">T</span>.对应于. 任意取一个<span class="math inline">right(q)</span>的元素<span class="math inline">r</span>. <span class="math inline">T=S[i,r],len(T)\in[len(par)+1,len]</span>.</p>
+</blockquote>
+</body>
+</html>

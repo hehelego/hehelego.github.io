@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>CF311B_Cats-Transport</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="cf311b-cats-transport">CF311B Cats Transport</h1>
+<h2 id="statement">statement</h2>
+<p>link: <a href="https://www.luogu.com.cn/problem/CF311B">luogu</a>,<a href="https://codeforces.com/contest/311/problem/B">codeforces</a></p>
+<p>有<span class="math inline">n</span>座编号为<span class="math inline">1,2,3\dots n</span>的山,用<span class="math inline">h_i</span>表示,其中<span class="math inline">dis(h_{i+1},h_i)=d_i</span>.<br />
+有<span class="math inline">m</span>只猫,一只猫用<span class="math inline">cat\{t,p\}</span>表示,要求在时间<span class="math inline">t</span>之后,从<span class="math inline">h_p</span>接走它.<br />
+可以安排<span class="math inline">p</span>次接猫行动,选定开始时间<span class="math inline">T</span>之后,从<span class="math inline">(T,h_1)</span>开始,到<span class="math inline">(T+d_1,h_2)</span>,以及<span class="math inline">(T+\sum_{j\leq i}d_j,h_i)</span>.到达<span class="math inline">h_i</span>时,可以不花费任何时间地接走那里的猫.</p>
+<p>最小化所有猫的等待时间之和.</p>
+<h2 id="solution">solution</h2>
+<p>令<span class="math inline">D_i=\sum_{j\leq i}d_j</span>以及<span class="math inline">s(c\{t,p\})=t-D_p</span></p>
+<p>对于猫<span class="math inline">c</span>而言,出发时间<span class="math inline">t</span>必须满足<span class="math inline">t\geq s(c)</span>才可以接走它.<br />
+并且出发时间为<span class="math inline">t</span>时,<span class="math inline">c</span>的等待时间是<span class="math inline">t-s(c)</span></p>
+<p>由于接猫行动不会在任何地方等待,所以每次行动取走的<span class="math inline">c</span>的<span class="math inline">[\min\,s(c_i),\max\,s(c_i)]</span>应该是不相交的.<br />
+或者这么描述,把<span class="math inline">c_1,c_2\dots c_m</span>按照<span class="math inline">s(c_i)</span>升序排列,我们每次取走一个前缀是最优的.<br />
+于是就是喜闻乐见的区间划分问题了.</p>
+<p>考虑在依次接猫中,取走区间<span class="math inline">[l,r]</span>中的所有猫猫,对于出发时间有<span class="math inline">t\geq s(c_r)</span>,而<span class="math inline">t</span>越大等待时间越长,于是令<span class="math inline">t=s(c_r)</span>即可.<br />
+总等待时间是<span class="math inline">(r-l+1)t-\sum_{l\leq i\leq r}s(c_i)</span></p>
+<p>这个最优化问题显然是有无后效性和最优子结构的,于是我们可以尝试写个动态规划.<br />
+设<span class="math inline">f(i,j)</span>表示进行了<span class="math inline">i</span>次接猫,已经接走了按照<span class="math inline">s(c)</span>排序后的前<span class="math inline">j</span>个猫,有状态转移方程</p>
+<p><span class="math display">
+\begin{aligned}
+f(i,j)=\min_{0\leq k&lt;j} (f(i-1,k)+g(k+1,j))\\
+g(l,r)=(r-l+1)\times s(c_r) - \sum_{l\leq i\leq r} s(c_i)
+\end{aligned}
+</span></p>
+<p>也就是</p>
+<p><span class="math display">
+\begin{aligned}
+&amp;pre_i=\sum_{j\leq i} s(c_j)\\
+\newline
+&amp;f(i,j)=\min_{0\leq k&lt;j} \{ f(i-1,k)+(j-k)\times s(c_j)-(pre_j-pre_k) \}\\
+&amp;=\min_{0\leq k&lt;j} \{ (j\times s(c_j)-pre_j)+(f(i-1,k)+pre_k-k\times s(c_j)) \}\\
+\end{aligned}
+</span></p>
+<p>是喜闻乐见的<code>斜率优化(也称为convex hull trick)</code>模型.<br />
+使用一个几何意义,</p>
+<p>令<span class="math inline">(x_k,y_k)=(k,f(i-1,k)+pre_k),slope_j=s(c_j)</span>有<br />
+<span class="math display">
+f(i,j)=\min_{0\leq k&lt;j} \{ y_k-slope_j\times x_k \}
+</span></p>
+<p>动态规划的状态转移变成了这样的形式: 二维平面上有一些点<span class="math inline">(x_k,y_k)</span>,选择过其中一个点,作一条斜率为<span class="math inline">slope_j</span>的直线,最小化直线与<span class="math inline">y-axis</span>的截距.<br />
+通过几何直观,我们容易发现以下性质.</p>
+<ul>
+<li>只有过点集的下凸壳上的点作直线才可能得到最小值.<br />
+</li>
+<li>考虑把凸包上的点按照<span class="math inline">x</span>分量升序排列,设当前在点<span class="math inline">(x_k,y_k)</span>,如果<span class="math inline">(x_{k+1},y_{k+1})-(x_k,y_k)</span>之间的连线的斜率小于<span class="math inline">slope</span>(或者说,<span class="math inline">(x_k,y_k)-(x_{k+1},y_{k+1})</span>的连线在 过<span class="math inline">(x_k,y_k)</span>有斜率<span class="math inline">slope</span>的直线的顺时针或者说左侧),那么选择<span class="math inline">k+1</span>比<span class="math inline">k</span>得到截距更小</li>
+</ul>
+<blockquote>
+<p>画图就知道上述结论的正确性了,当然通过计算来证明也是可以的</p>
+</blockquote>
+<p>下面就只剩利用计算几何与数据结构的技巧了,不再讲解.</p>
+<p><strong>当然更通用的做法是利用“决策单调性”进行优化</strong></p>
+<h2 id="code">code</h2>
+<h3 id="暴力dp">暴力DP</h3>
+<p>(总状态转移)时间复杂度<span class="math inline">O(p\,m^2)</span></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> read(){</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> x=<span class="dv">0</span>;<span class="dt">char</span> c;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">do</span>{c=getchar();}<span class="cf">while</span>(!isdigit(c));</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">do</span>{x=x*<span class="dv">10</span>+c-<span class="ch">&#39;0&#39;</span>;c=getchar();}<span class="cf">while</span>(isdigit(c));</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> Int;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> Int INF=Int(<span class="fl">1e18</span>);</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N=<span class="dv">100000</span>+<span class="dv">10</span>;</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n,m,p,d[N];</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Cat{</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> h,t;</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    Cat(<span class="dt">int</span> a=<span class="dv">0</span>,<span class="dt">int</span> b=<span class="dv">0</span>):h(a),t(b){}</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    Int st()<span class="at">const</span>{<span class="cf">return</span> t-d[h];}</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> <span class="kw">operator</span>&lt;(<span class="at">const</span> Cat&amp;r)<span class="at">const</span>{ <span class="cf">return</span> st()&lt;r.st(); }</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>}cat[N];</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>Int dp[<span class="dv">101</span>][N],pre[N];</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>Int solve(<span class="dt">int</span> l,<span class="dt">int</span> r){ <span class="cf">return</span> (r-l+<span class="dv">1</span>)*cat[r].st()-(pre[r]-pre[l-<span class="dv">1</span>]); }</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main(){</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    n=read();m=read();p=read();</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">2</span>;i&lt;=n;i++) d[i]=d[i-<span class="dv">1</span>]+read();</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">1</span>;i&lt;=m;i++){</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> h=read(),t=read();</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        cat[i]=Cat(h,t);</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>sort(cat+<span class="dv">1</span>,cat+m+<span class="dv">1</span>);</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">1</span>;i&lt;=m;i++) pre[i]=pre[i-<span class="dv">1</span>]+cat[i].st();</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;=p;i++) <span class="cf">for</span>(<span class="dt">int</span> j=<span class="dv">0</span>;j&lt;=m;j++) dp[i][j]=INF;</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    dp[<span class="dv">0</span>][<span class="dv">0</span>]=<span class="dv">0</span>;</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">1</span>;i&lt;=p;i++){</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span>(<span class="dt">int</span> j=<span class="dv">1</span>;j&lt;=m;j++){</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>            Int &amp;r=dp[i][j];</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span>(<span class="dt">int</span> k=<span class="dv">0</span>;k&lt;j;k++) r=<span class="bu">std::</span>min(r,dp[i-<span class="dv">1</span>][k]+solve(k+<span class="dv">1</span>,j));</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    Int ans=Int(<span class="fl">1e18</span>);</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;=p;i++) <span class="cf">if</span>(dp[i][m]&gt;=<span class="dv">0</span>) ans=<span class="bu">std::</span>min(ans,dp[i][m]);</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout&lt;&lt;ans&lt;&lt;<span class="bu">std::</span>endl;</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="斜率优化国外称为convex-hull-trick---单调队列优化">斜率优化(国外称为convex hull trick) - 单调队列优化</h3>
+<p>(总状态转移)时间复杂度<span class="math inline">O(pm)</span></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> read(){</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> x=<span class="dv">0</span>;<span class="dt">char</span> c;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">do</span>{c=getchar();}<span class="cf">while</span>(!isdigit(c));</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">do</span>{x=x*<span class="dv">10</span>+c-<span class="ch">&#39;0&#39;</span>;c=getchar();}<span class="cf">while</span>(isdigit(c));</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> Int;</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> Int INF=Int(<span class="fl">1e18</span>);</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> N=<span class="dv">100000</span>+<span class="dv">10</span>;</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> n,m,p,d[N];</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Cat{</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> h,t;</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    Cat(Int a=<span class="dv">0</span>,Int b=<span class="dv">0</span>):h(a),t(b){}</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    Int st()<span class="at">const</span>{<span class="cf">return</span> t-d[h];}</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> <span class="kw">operator</span>&lt;(<span class="at">const</span> Cat&amp;r)<span class="at">const</span>{ <span class="cf">return</span> st()&lt;r.st(); }</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>}cat[N];</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>Int dp[<span class="dv">101</span>][N],pre[N];</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>Int solve(<span class="dt">int</span> l,<span class="dt">int</span> r){ <span class="cf">return</span> (r-l+<span class="dv">1</span>)*cat[r].st()-(pre[r]-pre[l-<span class="dv">1</span>]); }</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Vec{ Int x,y; Vec(Int a,Int b):x(a),y(b){} };</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>Int cross(<span class="at">const</span> Vec&amp;a,<span class="at">const</span> Vec&amp;b){<span class="cf">return</span> a.x*b.y-a.y*b.x;}</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>Vec <span class="kw">operator</span>+(<span class="at">const</span> Vec&amp;a,<span class="at">const</span> Vec&amp;b){<span class="cf">return</span> Vec(a.x+b.x,a.y+b.y);}</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>Vec <span class="kw">operator</span>-(<span class="at">const</span> Vec&amp;a,<span class="at">const</span> Vec&amp;b){<span class="cf">return</span> Vec(a.x-b.x,a.y-b.y);}</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>Vec <span class="kw">operator</span>*(<span class="at">const</span> Vec&amp;a,Int k){<span class="cf">return</span> Vec(a.x*k,a.y*k);}</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>Vec get(<span class="dt">int</span> k,<span class="dt">int</span> i){ <span class="cf">return</span> Vec(k,dp[i-<span class="dv">1</span>][k]+pre[k]); }</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> q[N],ql,qr;</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main(){</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    n=read();m=read();p=read();</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">2</span>;i&lt;=n;i++) d[i]=d[i-<span class="dv">1</span>]+read();</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">1</span>;i&lt;=m;i++){</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> h=read(),t=read();</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        cat[i]=Cat(h,t);</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>sort(cat+<span class="dv">1</span>,cat+m+<span class="dv">1</span>);</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">1</span>;i&lt;=m;i++) pre[i]=pre[i-<span class="dv">1</span>]+cat[i].st();</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;=p;i++) <span class="cf">for</span>(<span class="dt">int</span> j=<span class="dv">0</span>;j&lt;=m;j++) dp[i][j]=INF;</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    dp[<span class="dv">0</span>][<span class="dv">0</span>]=<span class="dv">0</span>;</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> j=<span class="dv">1</span>;j&lt;=m;j++) dp[<span class="dv">1</span>][j]=solve(<span class="dv">1</span>,j);</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">2</span>;i&lt;=p;i++){</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        q[ql=<span class="dv">0</span>]=i-<span class="dv">1</span>; qr=<span class="dv">1</span>;</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span>(<span class="dt">int</span> j=i;j&lt;=m;j++){</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span>(qr-ql&gt;<span class="dv">1</span>&amp;&amp;cross(Vec(<span class="dv">1</span>,cat[j].st()),get(q[ql+<span class="dv">1</span>],i)-get(q[ql],i))&lt;=<span class="dv">0</span>) ql++;</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> pp=q[ql]; dp[i][j]=dp[i-<span class="dv">1</span>][pp]+solve(pp+<span class="dv">1</span>,j);</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span>(qr-ql&gt;<span class="dv">1</span>&amp;&amp;cross(get(q[qr-<span class="dv">1</span>],i)-get(q[qr-<span class="dv">2</span>],i),get(j,i)-get(q[qr-<span class="dv">1</span>],i))&lt;=<span class="dv">0</span>) qr--;</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>            q[qr++]=j;</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    Int ans=Int(<span class="fl">1e18</span>);</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">1</span>;i&lt;=p;i++) ans=<span class="bu">std::</span>min(ans,dp[i][m]);</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout&lt;&lt;ans&lt;&lt;<span class="bu">std::</span>endl;</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</body>
+</html>

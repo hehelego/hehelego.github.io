@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ch3-combinatorics</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="binomial-coefficient">binomial coefficient</h1>
+<h2 id="binomial-identitiese">binomial identitiese</h2>
+<p><span class="math display">\begin{aligned}
+        \forall \alpha\in \mathbb{R}\quad
+        {(1+x)}^{\alpha}
+                                 &amp; =\sum_{n=0}^\infty \binom{\alpha}{n}x^n=\sum_{n=0}^\infty \dfrac{\alpha^{\underline n}}{n!} x^n \\
+        \forall n\in \mathbb{N}^+, k\in \mathbb{N}\quad \binom{n}{k}
+                                 &amp; = \binom{n-1}{k-1}+\binom{n-1}{k}                                                               \\
+        \forall n,k,i\in \mathbb{N}\ k\leq i\leq n\quad
+        \binom{n}{k}\binom{k}{i} &amp; = \binom{n}{i}\binom{n-i}{k-i}                                                                  \\
+        \binom{-\alpha}{k}{(-1)}^k
+                                 &amp; =\dfrac{\prod_{i=0}^{k-1}(-\alpha-i)}{k!}{(-1)}^k
+        =\dfrac{\prod_{i=0}^{k-1}(\alpha+i)}{k!}
+        =\dfrac{{\alpha+k-1}^{\underline k}}{k!}
+        =\binom{\alpha+k-1}{k}
+    \end{aligned}</span></p>
+<h2 id="exercies-involving-binomial-coefficient">exercies involving binomial coefficient</h2>
+<p><strong>TODO</strong></p>
+<h1 id="finite-calculus">finite calculus</h1>
+<p>or <strong>calculus of finite difference</strong></p>
+<h2 id="formulas">formulas</h2>
+<ul>
+<li><p><strong>discrete derivative</strong>: <span class="math inline">g(x)=\Delta_x f(x)\iff g(x)=f(x+1)-f(x)</span>.<br />
+<span class="math inline">g(x)</span> is called the <em>discrete derivative</em> or <em>difference</em> of <span class="math inline">f(x)</span>.<br />
+<span class="math inline">\Delta</span> is called the <em>difference operator</em>.</p></li>
+<li><p>Let <span class="math inline">x^{\underline k}=\prod_{i=0}^{k-1}(x-i),\, x^{\overline k}=\prod_{i=0}^{k-1}(x+i)</span> then <span class="math inline">\Delta_x x^{\underline k}=k x^{\underline {k-1}}</span><br />
+Quick notes: <span class="math inline">\Delta_x c^x = (c-1)c^x,\ \Delta_x c = 0\ \Delta_x \binom{x}{k}=\binom{x}{k-1}</span></p></li>
+<li><p><span class="math inline">\Delta_x\left({af(x)+bg(x)}\right)=a\Delta_x f(x)+b\Delta_x g(x)</span><br />
+The difference operator is a linear operator.</p></li>
+<li><p><strong>discrete anti-derivative</strong>: <span class="math inline">\Delta_x f(x)=g(x)\iff \sum g(x)\delta x=f(x)+C</span><br />
+<span class="math inline">f(x)</span> is called the <em>discrete anti-derivative</em> or <em>anti-difference</em> of <span class="math inline">g(x)</span><br />
+</p></li>
+<li><p><strong>discrete definite integral</strong>: <span class="math inline">\Delta_x f(x)=g(x) \iff \sum_{a}^b g(x)\delta x = \sum_{x=a}^{b-1} g(x)=f(b)-f(a)</span></p></li>
+<li><p><strong>finite integration by parts</strong>: Abel partial summation formula<br />
+<span class="math display">\begin{aligned}
+                        A_i=\sum_{j=1}^{i}a_j \implies \sum_{i=1}^{n} a_i b_i
+                   &amp; = A_n b_n-\sum_{i=1}^{n-1} A_i (b_{i+1}-b_i)   \\
+                  \sum u(x)\Delta v(x) \delta x
+                   &amp; =u(x)v(x)-\sum v(x+1) \Delta u(x) \delta x \\
+                  u(x)\Delta v(x)
+                   &amp; = \Delta \left({u(x)v(x)}\right) - v(x+1)\Delta u(x)
+              \end{aligned}</span></p></li>
+</ul>
+<h2 id="exercies">exercies</h2>
+<p><strong>TODO</strong></p>
+</body>
+</html>

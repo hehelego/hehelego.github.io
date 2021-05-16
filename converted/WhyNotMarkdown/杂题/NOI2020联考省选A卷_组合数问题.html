@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>NOI2020联考省选A卷_组合数问题</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="noi省选联考a卷组合数问题">2020NOI省选联考A卷:组合数问题</h2>
+<h3 id="statement">statement</h3>
+<p><a href="https://loj.ac/problem/3300/">link:loj3300</a></p>
+<p>给定<span class="math inline">n,x,p</span>以及<span class="math inline">m</span>次多项式<span class="math inline">f(x)</span>求 <span class="math display">\left(\sum_{k=0}^n f(k) \times x^k \times \binom n k\right) \bmod p</span></p>
+<p>其中<span class="math inline">1\le n, x, p \le 10^9, 0\le a_i\le 10^9, 0\le m \le \min(n,1000)</span></p>
+<h3 id="sol">sol</h3>
+<p><span class="math display">
+\sum_{k=0}^n f(k)x^k\binom{n}{k}
+=\sum_{k=0}^n \sum_{i=0}^m x^k a_ik^i\binom{n}{k}
+=\sum_{i=0}^ma_i \sum_{k=0}^nx^kk^i\binom{n}{k}
+</span></p>
+<p><span class="math inline">n</span>极大而<span class="math inline">m</span>极小,显然是<span class="math inline">m</span>次暴力计算.</p>
+<p>这里用到的trick是<span class="math inline">n^m=\sum_{i=0}^{m} \begin{Bmatrix}m\\i\end{Bmatrix}i!\binom{n}{i}</span><br />
+斯特林转换幂的时候,下标应当从<span class="math inline">1</span>开始而不是<span class="math inline">0</span>但是我们先留着那个<span class="math inline">0</span>方便凑出二项式的那个形式,<br />
+最后钦定所有的<span class="math inline">\begin{Bmatrix}n\\0\end{Bmatrix}=0</span>即可.</p>
+<p><span class="math display">
+\begin{aligned}
+g(r)
+&amp;=\sum_{k=0}^n x^k k^r \binom{n}{k}=\sum_{i=0}^n \binom{n}{i} x^i i^r\\
+&amp;=\sum_{i=0}^n \binom{n}{i}x^i\sum_{j=0}^r \begin{Bmatrix}r\\ j\end{Bmatrix} j! \binom{i}{j}
+=\sum_{j=0}^r j! \begin{Bmatrix}r\\j\end{Bmatrix}  \sum_{i=0}^n\binom{n}{i} \binom{i}{j} x^i\\
+\text{(A)}&amp;=\sum_{j=0}^r j! \begin{Bmatrix}r\\j\end{Bmatrix} \sum_{i=0}^n \binom{n-j}{i-j} \binom{n}{j} x^i\\
+&amp;=\sum_{j=0}^r j!\begin{Bmatrix}r\\ j\end{Bmatrix} \binom{n}{j} \sum_{i=j}^n \binom{n-j}{i-j} x^i
+=\sum_{j=0}^r j!\begin{Bmatrix}r\\ j\end{Bmatrix} \binom{n}{j} x^j\sum_{i=0}^{n-j} \binom{n-j}{i} x^i\\
+&amp;=\sum_{j=0}^r j!\begin{Bmatrix}r\\ j\end{Bmatrix} \binom{n}{j} x^j {(1+x)}^{n-j}
+=\sum_{j=0}^r \begin{Bmatrix}r\\ j\end{Bmatrix} x^j {(1+x)}^{n-j} n^{\underline j}
+\end{aligned}
+</span></p>
+<p>(A)用到了<span class="math inline">\binom{n}{i}\binom{i}{j}=\binom{n}{j}\binom{n-i}{i-j}</span><br />
+可以展开,也可以这么想<br />
+- <span class="math inline">\{(S,T)\in {\rho([n])}^2\mid S\subseteq T \land |S|=j\land |T|=i\}</span>即<span class="math inline">\binom{n}{i}\binom{i}{j}</span><br />
+选一个<span class="math inline">i</span>集合<span class="math inline">S</span>,再选<span class="math inline">S</span>的<span class="math inline">j</span>子集<span class="math inline">T</span> - <span class="math inline">\{(S,T&#39;)\in {\rho([n])}^n \mid T\subseteq \overline{S}\land |S|=j\land |T|=i-j\}</span>即<span class="math inline">\binom{n}{j}\binom{n-i}{i-j}</span><br />
+先选一个<span class="math inline">j</span>子集<span class="math inline">T</span>,从剩下的元素中选个<span class="math inline">i-j</span>子集<span class="math inline">S&#39;</span>,最后<span class="math inline">S\leftarrow S&#39;\cup T</span> - 两者之间存在bijection,所以其cardinality相等</p>
+<p>综上所述,答案即为</p>
+<p><span class="math display">
+\sum_{i=0}^m a_i \sum_{j=0}^{\min(n,i)} \begin{Bmatrix}i\\ j\end{Bmatrix}n^{\underline j}\ x^j {(1+1)}^{n-j}
+</span></p>
+<hr />
+<p>最后, 对于 <span class="math inline">\binom{n}{i}\bmod p \ (i\leq m&lt;10^3,n &lt;10^9)</span><br />
+就是<span class="math inline">(1+z)^n\bmod z^{m+1}</span>, 多项式求幂并截断可以倍增.<br />
+多项式乘法只涉及乘法和加法,所以模数<span class="math inline">p</span>的素性不重要.</p>
+</body>
+</html>
